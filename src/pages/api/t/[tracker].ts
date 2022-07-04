@@ -5,13 +5,14 @@ import { prisma } from "../../../server/db/client";
 
 const tracker = async (req: NextApiRequest, res: NextApiResponse) => {
   const {tracker} = req.query;
-  if(!tracker) {
+  const token = (tracker as string).split('.')[0]
+  if(!token) {
     res.status(404).end('not_found')
     return;
   } 
   try {
     await prisma.pixelTracker.update({
-      where: {tracker: tracker as string},
+      where: {tracker: token},
       data: {openCount: {increment: 1}}
     })
 
