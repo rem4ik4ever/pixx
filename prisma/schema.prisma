@@ -2,15 +2,15 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
-//  url      = "file:./db.sqlite"
+  //  url      = "file:./db.sqlite"
 }
 
 model Example {
@@ -66,4 +66,57 @@ model PixelTracker {
   id        String @id @default(cuid())
   tracker   String @unique @default(uuid())
   openCount Int    @default(0)
+}
+
+model Campaign {
+  id           String  @id @default(cuid())
+  name         String
+  fromEmail    String
+  fromName     String
+  customTo     String?
+  replyToEmail String?
+  lists IncludeList[]
+  excludeLists ExcludeList[]
+}
+
+model IncludeList {
+  campaign Campaign @relation(fields: [campaignId], references: [id]) 
+  campaignId String
+  list ContactList @relation(fields: [listId], references: [id])
+  listId String
+
+  @@id([campaignId, listId])
+}
+
+model ExcludeList {
+  campaign Campaign @relation(fields: [campaignId], references: [id]) 
+  campaignId String
+  list ContactList @relation(fields: [listId], references: [id])
+  listId String
+
+  @@id([campaignId, listId])
+}
+
+model ContactList {
+  id       String            @id @default(cuid())
+  name     String
+  contacts ContactsInLists[]
+  includedInCampaigns IncludeList[]
+  excludedInCampaigns ExcludeList[]
+}
+
+model Contact {
+  id    String            @id @default(cuid())
+  email String
+  lists ContactsInLists[]
+}
+
+model ContactsInLists {
+  contact    Contact     @relation(fields: [contactId], references: [id])
+  contactId  String // relation scalar field (used in the `@relation` attribute above)
+  list       ContactList @relation(fields: [listId], references: [id])
+  listId     String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime    @default(now())
+
+  @@id([contactId, listId])
 }
