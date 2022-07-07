@@ -64,17 +64,17 @@ interface FeatureItemProps {
 const FeatureItem: React.FC<FeatureItemProps> = ({ id, imgSrc, title, description }) => {
   const isEven = id % 2 === 0;
   return (
-    <div className='flex md:flex-row items-stretch justify-center gap-2'>
-      <div className={clx(isEven ? 'order-3' : 'order-1', s.featureItemTextContainer)}>
+    <div className='flex md:flex-row flex-col md:items-stretch items-center justify-center gap-2 md:mb-0 md:h-auto h-[70vh]'>
+      <div className={clx(isEven ? 'md:order-3' : 'md:order-1', s.featureItemTextContainer)}>
         <div className={clx(s.featureItemText)}>
           <h6 className="text-3xl text-orange-light py-2 font-bold">{title}</h6>
           <p className="text-lg">{description}</p>
         </div>
       </div>
-      <div className="order-2 border border-accent-6 flex items-center mx-8">
+      <div className="md:flex hidden order-2 border border-accent-6 items-center mx-8">
         <div className="absolute bg-orange-light py-2 px-4 rounded-full -ml-5">{id}</div>
       </div>
-      <div className={clx(s.featureItemImageContainer, isEven ? 'order-1' : 'order-3', isEven ? 'bg-accent-2' : 'bg-dark-blue')}>
+      <div className={clx(s.featureItemImageContainer, isEven ? 'md:order-1' : 'md:order-3', isEven ? 'bg-accent-2' : 'bg-dark-blue')}>
         <Image src={imgSrc} alt="title" width={400} height={400} />
       </div>
     </div>
@@ -125,7 +125,7 @@ const Features = () => {
 
 const Footer = () => {
   return (
-    <footer className="container mx-auto flex py-4 my-8 gap-8 justify-center">
+    <footer className="container mx-auto flex py-4 my-8 gap-8 justify-center md:flex-row flex-col md:p-0 p-4">
       <div>
         <h4 className="text-4xl font-bold">Go with the flow</h4>
         <SubscribeForm />

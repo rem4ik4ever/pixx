@@ -45,7 +45,7 @@
 }
 
 .featuresTitle {
-  @apply text-5xl py-8;
+  @apply text-3xl px-2 md:text-5xl py-8 text-center;
 }
 
 
@@ -58,5 +58,5 @@
 }
 
 .featureItemImageContainer {
-  @apply border border-orange-light rounded-md overflow-hidden p-2 w-96 my-4;
+  @apply border border-orange-light rounded-md overflow-hidden p-2 md:w-96 my-4 w-64;
 }
