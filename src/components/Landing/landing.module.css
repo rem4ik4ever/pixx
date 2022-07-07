@@ -39,7 +39,24 @@
   @apply max-w-xl relative;
 }
 
-.leftImage {
-  @apply absolute;
-  margin-left: -280px;
+
+.featuresSection {
+  @apply bg-dark text-white;
+}
+
+.featuresTitle {
+  @apply text-5xl py-8;
+}
+
+
+.featureItemText{
+  @apply text-center max-w-xs;
+}
+
+.featureItemTextContainer {
+  @apply flex justify-center items-center w-96;
+}
+
+.featureItemImageContainer {
+  @apply border border-orange-light rounded-md overflow-hidden p-2 w-96 my-4;
 }
