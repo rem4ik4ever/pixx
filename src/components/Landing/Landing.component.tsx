@@ -20,11 +20,12 @@ const HeroSection = () => {
       'customer reach',
       'client engagement',
       'conversion',
-    ], typeSpeed: 50, backSpeed: 50,
+    ], 
+    typeSpeed: 50, 
+    backSpeed: 50,
     backDelay: 1500,
     loop: true,
-  }
-  )
+  })
   return (
     <div className='mx-auto container'>
       <header className={s.header}>
