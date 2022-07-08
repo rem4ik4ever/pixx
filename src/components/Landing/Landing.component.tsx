@@ -12,8 +12,19 @@ import designInspiration from '../../assets/design-inspiration.svg'
 import projectComplete from '../../assets/project-complete.svg'
 import thoughProcess from '../../assets/thought-process.svg'
 import Image from 'next/image'
+import useTyped from '@components/useTyped';
 
 const HeroSection = () => {
+  const { ref } = useTyped({
+    strings: [
+      'customer reach',
+      'client engagement',
+      'conversion',
+    ], typeSpeed: 50, backSpeed: 50,
+    backDelay: 1500,
+    loop: true,
+  }
+  )
   return (
     <div className='mx-auto container'>
       <header className={s.header}>
@@ -25,9 +36,9 @@ const HeroSection = () => {
         </div>
         <div className={s.heroContent}>
           <h1 className={s.heroTitle}>
-            Increase <span className="text-orange">sales</span><br />
-            with email<br />
-            automation
+            Email automation<br />
+            to increase<br />
+            <span className="text-orange" ref={ref}>sales</span><br />
           </h1>
           <p className={s.subtitle}>
             Automate email marketing campaigns and make them look awesome for your clients
