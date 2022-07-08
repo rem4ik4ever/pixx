@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import Link from 'next/link'
 import Button from '../ui/Button'
 import Input from '../ui/Input'
@@ -13,6 +13,7 @@ import projectComplete from '../../assets/project-complete.svg'
 import thoughProcess from '../../assets/thought-process.svg'
 import Image from 'next/image'
 import useTyped from '@components/useTyped';
+import { trpc } from 'src/utils/trpc';
 
 const HeroSection = () => {
   const { ref } = useTyped({
@@ -20,8 +21,8 @@ const HeroSection = () => {
       'customer reach',
       'client engagement',
       'conversion',
-    ], 
-    typeSpeed: 50, 
+    ],
+    typeSpeed: 50,
     backSpeed: 50,
     backDelay: 1500,
     loop: true,
@@ -58,10 +59,33 @@ const HeroSection = () => {
 }
 
 const SubscribeForm = () => {
+  const [email, setEmail] = useState('')
+  const { isLoading, isSuccess, isError, error, mutateAsync, reset } = trpc.useMutation('public.subscribeEmail')
+  const handleSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault()
+    await mutateAsync({ email })
+  }, [email])
+  if (isSuccess) {
+    return (
+      <p className="flex justify-center py-4 text-dark-blue font-bold">
+        Thank you for joining waitlist! ✅
+      </p>
+    )
+  }
+  if (isError) {
+    return (
+      <p className="flex flex-col md:flex-row justify-center items-center gap-2 py-4 text-red font-bold">
+        <span>
+          Something went wrong! Please try again
+        </span>
+        <Button type="button" variant="slim" onClick={reset}>Retry</Button>
+      </p>
+    )
+  }
   return (
-    <form className={s.subscribeForm}>
-      <Input type="email" placeholder='Enter your email*' required />
-      <Button type="submit" variant='slim' className='whitespace-nowrap'>JOIN WAITLIST</Button>
+    <form className={s.subscribeForm} onSubmit={handleSubmit}>
+      <Input type="email" value={email} onChange={setEmail} placeholder='Enter your email*' required />
+      <Button type="submit" variant='slim' className='whitespace-nowrap' loading={isLoading} disabled={isLoading}>JOIN WAITLIST</Button>
     </form>
 
   )
