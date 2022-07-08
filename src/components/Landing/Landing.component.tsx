@@ -40,7 +40,7 @@ const HeroSection = () => {
           <h1 className={s.heroTitle}>
             Email automation<br />
             to increase<br />
-            <span className="text-orange" ref={ref}>sales</span><br />
+            <span className="text-orange" ref={ref}></span><br />
           </h1>
           <p className={s.subtitle}>
             Automate email marketing campaigns and make them look awesome for your clients
