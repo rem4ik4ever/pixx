@@ -28,7 +28,7 @@ const HeroSection = () => {
     loop: true,
   })
   return (
-    <div className='mx-auto container'>
+    <div className='mx-auto container fadein'>
       <header className={s.header}>
         <Link href="/"><span className={s.logo}>Flows</span></Link>
       </header>

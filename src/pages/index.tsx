@@ -1,11 +1,15 @@
+import { Landing } from "@components/Landing";
 import type { NextPage } from "next";
-import Head from "next/head";
-import { Landing } from "../components/Landing";
-import { trpc } from "../utils/trpc";
+import { DefaultSeo } from 'next-seo'
+import defaultSeo from '../seo'
+
 
 const Home: NextPage = () => {
   return (
-    <Landing />
+    <>
+      <DefaultSeo {...defaultSeo} />
+      <Landing />
+    </>
   );
 };
 
