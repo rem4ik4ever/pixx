@@ -10,6 +10,12 @@ const defaultSeo: DefaultSeoProps = {
     site_name: 'Flows',
     images: [
       {
+        url: 'https://www.flows.so/og_image_800_600_dark.png',
+        width: 800,
+        height: 600,
+        alt: 'Flows OG dark',
+      },
+      {
         url: 'https://www.flows.so/og_image_800_600.png',
         width: 800,
         height: 600,
