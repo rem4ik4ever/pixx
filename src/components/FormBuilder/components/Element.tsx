@@ -43,15 +43,11 @@ export const FormElement = forwardRef<HTMLLIElement, Props>(function Element(
       style={style}
       ref={ref}
     >
-      {id}
-      <button className={styles.Element} data-id={id.toString()} {...props} />
+      <button className={styles.Element} data-id={id.toString()} {...props}>{id}</button>
       {!active && onRemove ? (
         <button className={styles.Remove} onClick={onRemove}>
           ❌
         </button>
-      ) : null}
-      {index != null ? (
-        <span className={styles.ElementNumber}>{index}</span>
       ) : null}
     </li>
   );

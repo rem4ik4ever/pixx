@@ -10,7 +10,6 @@ export const Droppable: React.FC<DroppableProps> = ({id, children}) => {
     id
   });
   const style = {
-    outline: isOver ? '2px solid teal' : 'none' ,
   };
 
   return (

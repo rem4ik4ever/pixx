@@ -1,8 +1,8 @@
 .Wrapper {
   position: relative;
   list-style: none;
-  width: 150px;
-  margin-bottom: 0.5rem;
+  width: 100%;
+  @apply py-1;
 
   &.active {
     .Element {
@@ -34,11 +34,12 @@
   &:not(.active, .clone) {
     &.insertBefore,
     &.insertAfter {
-      .Element:after {
+      /*&:after {
         content: '';
         position: absolute;
         background-color: #4c9ffe;
-      }
+      }*/
+      border-color: #4c9ffe;
     }
   }
 
@@ -49,6 +50,7 @@
         top: 0;
         bottom: 0;
         width: 2px;
+        padding-top: 2px
       }
     }
     &.insertBefore {
@@ -71,27 +73,31 @@
   &.vertical {
     &.insertBefore,
     &.insertAfter {
-      .Element:after {
+      /*&:after {
         left: 0;
         right: 0;
         height: 2px;
-      }
+      }*/
     }
     &.insertBefore {
       &.clone {
         margin-top: -125px;
       }
-      .Element:after {
+      border-top-width: 1px;
+      border-top-style: solid;
+      /*&:after {
         top: -15px;
-      }
+      }*/
     }
     &.insertAfter {
       &.clone {
         margin-bottom: 125px;
       }
-      .Element:after {
+      /*&:after {
         bottom: -45px;
-      }
+      }*/
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
     }
   }
 }
@@ -99,7 +105,7 @@
 .Element {
   position: relative;
   display: block;
-  width: 200px;
+  width: 100%;
   height: 80px;
   background-color: rgb(250, 255, 255);
   background-size: cover;

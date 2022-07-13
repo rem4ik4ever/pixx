@@ -1,11 +1,9 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import clx from "classnames"
-import { Draggable } from "./components/Draggable"
 import { Droppable } from "./components/Droppable"
 import { FormElement, Props as FormElementProps, Position, Layout } from "./components/Element"
 import { FormInput } from "./components/Input"
-import { Sortable } from "./components/Sortable"
 import { FormText } from "./components/Text"
 import { Element } from "./types"
 
@@ -16,9 +14,9 @@ const Elements = {
 
 export const Constructor = ({ elements, activeIndex }: { elements: Element[], activeIndex: number }) => {
   return (
-    <div className="flex justify-center items-center mx-auto">
+    <div className="flex justify-center items-center mx-auto bg-white">
       <Droppable id="constructor">
-        <div className={clx("shadow-md min-w-[550px] min-h-[650px]", elements.length === 0 ? ['flex', 'justify-center', 'items-center'] : ['flex', 'flex-col'])}>
+        <ul className={clx("shadow-md min-w-[365px]", elements.length === 0 ? ['flex', 'justify-center', 'items-center'] : ['flex', 'flex-col'])}>
           {elements.length === 0 && <span>Drop elements here</span>}
           {elements.map((element, index) => (
             <SortableElement
@@ -31,7 +29,7 @@ export const Constructor = ({ elements, activeIndex }: { elements: Element[], ac
 
             />
           ))}
-        </div>
+        </ul>
       </Droppable>
     </div>
   )

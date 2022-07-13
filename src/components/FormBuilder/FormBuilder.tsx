@@ -5,8 +5,10 @@ import { Elements } from "./Elements"
 import { Element } from "./types"
 import { v4 as uuidv4 } from 'uuid'
 import { CSS, isKeyboardEvent } from '@dnd-kit/utilities';
-import { SortableContext } from '@dnd-kit/sortable'
+import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 import { FormElement, Layout, Position, Props as FormElementProps } from "./components/Element"
+import { findIndex } from "./utils"
+import elementStyles from './components/Element.module.css'
 
 const measuring: MeasuringConfiguration = {
   droppable: {
@@ -28,36 +30,12 @@ const dropAnimation: DropAnimation = {
       },
     ];
   },
-  //sideEffects: defaultDropAnimationSideEffects({
-  //  className: {
-  //    active: pageStyles.active,
-  //  },
-  //}),
+  sideEffects: defaultDropAnimationSideEffects({
+    className: {
+      active: elementStyles.active,
+    },
+  }),
 };
-
-const findIndex = (elements: Element[], id: UniqueIdentifier | null) => {
-  if (!id) return -1
-
-  let index = 0;
-  while (index < elements.length) {
-    if (elements[index]?.id === id) {
-      return index;
-    }
-    index += 1;
-  }
-  return -1;
-}
-
-export function arrayMove(array: any[], from: number, to: number): any[] {
-  const newArray = array.slice()
-  newArray.splice(
-    to < 0 ? newArray.length + to : to,
-    0,
-    newArray.splice(from, 1)[0]
-  );
-
-  return newArray;
-}
 
 export const FormBuilder = () => {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
@@ -140,14 +118,14 @@ export const FormBuilder = () => {
       measuring={measuring}
     >
       <SortableContext items={elements}>
-        <div className="container mx-auto">
+        <div className="bg-link-water">
           <div className="flex">
             <Elements />
             <Constructor elements={elements} activeIndex={activeIndex} />
           </div>
         </div>
       </SortableContext>
-      <DragOverlay dropAnimation={null}>
+      <DragOverlay dropAnimation={dropAnimation}>
         {activeId ? (
           <ElementOverlay id={activeId} layout={Layout.Vertical} elements={elements} />
         ) : null}
