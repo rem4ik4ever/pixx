@@ -3,6 +3,10 @@ module.exports = {
     purgeLayersByDefault: true,
     applyComplexClasses: true,
   },
+  plugins: [
+    require('@tailwindcss/typography'),
+    // ...
+  ],
   purge: {
     content: [
       './src/**/*.{js,ts,jsx,tsx}',

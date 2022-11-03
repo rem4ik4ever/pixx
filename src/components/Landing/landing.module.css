@@ -1,5 +1,8 @@
+.root {
+  background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M3.25 10h13.5M10 3.25v13.5'  stroke-linejoin='round' stroke-linecap='round' stroke-width='1' stroke='hsla(259, 0%, 93%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>")
+}
 .logo {
-  @apply text-orange text-2xl font-bold cursor-pointer;
+  @apply text-neutral-600 text-2xl font-semibold cursor-pointer;
 }
 
 .header {
@@ -8,15 +11,28 @@
 }
 
 .heroTitle{
-  @apply text-4xl md:text-6xl text-center font-bold;
+  @apply text-4xl md:text-5xl text-center font-semibold;
+}
+.mainTitle {
+  background: linear-gradient(to right, #1754CF 0%, #F02BD6 100%);
+  background-clip: text;
+  text-fill-color: transparent;
+  color: transparent;
+}
+
+.heroTitleAccent {
+  @apply font-extrabold underline italic;
+}
+.heroTitleArrow {
+  height: 80px;
 }
 
 .subtitle {
-  @apply text-accent-5 md:text-xl text-center px-10 mt-8;
+  @apply text-accent-5 md:text-xl mt-8;
 }
 
 .subscribeForm {
-  @apply flex md:flex-row flex-col items-stretch md:items-center gap-2 flex-1 max-w-md mx-auto mt-8 px-2;
+  @apply flex md:flex-row flex-col items-stretch md:items-center gap-2 flex-1 mx-auto mt-8;
 }
 
 .emailInput {
@@ -36,7 +52,11 @@
 }
 
 .heroContent {
-  @apply max-w-xl relative;
+  @apply relative sm:w-2/5;
+
+}
+.heroImage {
+  @apply md:w-3/5;
 }
 
 

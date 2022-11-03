@@ -4,9 +4,6 @@ import Button from '../ui/Button'
 import Input from '../ui/Input'
 import s from './landing.module.css'
 import clx from 'classnames'
-import RightSvg from '../../assets/undraw_well_done_re_3hpo.svg'
-import LeftSvg from '../../assets/undraw_projections_re_ulc6.svg'
-import MobileSvg from '../../assets/undraw_email_campaign_re_m6k5.svg'
 import dataReport from '../../assets/data-report.svg'
 import designInspiration from '../../assets/design-inspiration.svg'
 import projectComplete from '../../assets/project-complete.svg'
@@ -14,13 +11,15 @@ import thoughProcess from '../../assets/thought-process.svg'
 import Image from 'next/image'
 import useTyped from '@components/useTyped';
 import { trpc } from 'src/utils/trpc';
+import arrow from './arrow.svg'
+import { ShareModal } from '@components/ShareModal';
 
 const HeroSection = () => {
   const { ref } = useTyped({
     strings: [
-      'customer reach',
-      'client engagement',
-      'conversion',
+      'text',
+      'video',
+      'social'
     ],
     typeSpeed: 50,
     backSpeed: 50,
@@ -28,32 +27,30 @@ const HeroSection = () => {
     loop: true,
   })
   return (
-    <div className='mx-auto container fadein'>
-      <header className={s.header}>
-        <Link href="/"><span className={s.logo}>Flows</span></Link>
-      </header>
-      <section className={clx(s.hero, 'fit')}>
-        <div className="md:block hidden">
-          <Image src={LeftSvg} alt="left-svg" width={380} />
-        </div>
-        <div className={s.heroContent}>
-          <h1 className={s.heroTitle}>
-            Email automation<br />
-            to increase<br />
-            <span className="text-orange" ref={ref}></span><br />
-          </h1>
-          <p className={s.subtitle}>
-            Automate email marketing campaigns and make them look awesome for your clients
-          </p>
-          <SubscribeForm />
-        </div>
-        <div className="md:block hidden">
-          <Image src={RightSvg} alt="right-svg" width={380} />
-        </div>
-        <div className='block md:hidden'>
-          <Image src={MobileSvg} alt="right-svg" width={220} height={220} />
-        </div>
-      </section>
+    <div className={s.root}>
+      <div className={clx('mx-auto container fadein')}>
+        <header className={s.header}>
+          <Link href="/"><span className={s.logo}>ClientsTrust.me</span></Link>
+        </header>
+        <section className={clx(s.hero, 'fit')}>
+          <div className={s.heroContent}>
+            <h1 className={s.mainTitle}>
+              <div className="flex items-center">
+                <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
+              </div>
+              <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
+            </h1>
+            <p className={s.subtitle}>
+              Create trust and strengthen brand credibility. With easy no code solution!
+            </p>
+            <SubscribeForm />
+          </div>
+          <div className={clx(s.heroImage, 'flex justify-center')}>
+            <ShareModal />
+            {/*<img src="/hero-sample.png" />*/}
+          </div>
+        </section>
+      </div>
     </div>
   )
 }
