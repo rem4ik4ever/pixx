@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { ChatBubbleBottomCenterIcon, VideoCameraIcon, ShareIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleBottomCenterIcon as ChatBubbleSolid, VideoCameraIcon as VideoCameraSolid, ShareIcon as ShareSolid } from '@heroicons/react/24/solid'
 import { TextTestimonial } from './TextTestimonial'
-import Button from '@components/ui/Button'
 import autoAnimate from '@formkit/auto-animate'
+import { SocialTestimonial } from './SocialTestimonial'
+import { useReactMediaRecorder } from 'react-media-recorder'
+import VideoTestimonial from './VideoTestimonial'
+//import { VideoTestimonial } from './VideoTestimonial'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -12,32 +15,33 @@ function classNames(...classes: string[]) {
 
 export default function TestimonialTypeSelector() {
   const parent = useRef(null)
+
+  const { status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl } =
+    useReactMediaRecorder({ video: true, audio: true });
   useEffect(() => {
+
     parent.current && autoAnimate(parent.current)
   }, [parent])
-  let [categories] = useState([
+  let categories = useMemo(() => ([
     {
       type: 'Text',
       Icon: ChatBubbleBottomCenterIcon,
       IconSolid: ChatBubbleSolid,
-      Content: TextTestimonial,
     },
     {
       type: 'Video',
       Icon: VideoCameraIcon,
       IconSolid: VideoCameraSolid,
-      Content: TextTestimonial,
     },
     {
       type: 'Social',
       Icon: ShareIcon,
       IconSolid: ShareSolid,
-      Content: TextTestimonial,
     }
-  ])
+  ]), [])
 
   return (
-    <div className="w-full max-w-md px-2 py-8 sm:px-0">
+    <div className="w-full max-w-md px-2 pt-8 pb-4 sm:px-0">
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-xl p-1 border" ref={parent}>
           {categories.map(({ type, Icon, IconSolid }) => (
@@ -63,20 +67,37 @@ export default function TestimonialTypeSelector() {
           ))}
         </Tab.List>
         <Tab.Panels className="mt-2">
-          {categories.map(({ Content, type }, idx) => (
-            <>
-              <Tab.Panel
-                key={type}
-                className={classNames(
-                  'bg-white',
-                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                )}
-              >
-                <Content />
-              </Tab.Panel>
-            </>
-          ))}
+          <Tab.Panel
+            key="Text"
+            className={classNames(
+              'bg-white',
+              'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+            )}
+          >
+            <TextTestimonial />
+          </Tab.Panel>
+
+          <Tab.Panel
+            key="Video"
+            className={classNames(
+              'bg-white',
+              'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+            )}
+          >
+            <VideoTestimonial {...{ status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl }} />
+          </Tab.Panel>
+
+          <Tab.Panel
+            key="Social"
+            className={classNames(
+              'bg-white',
+              'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+            )}
+          >
+            <SocialTestimonial />
+          </Tab.Panel>
         </Tab.Panels>
+
       </Tab.Group>
     </div>
   )

@@ -48,11 +48,11 @@
 }
 
 .hero{
-  @apply flex md:flex-row flex-col items-center justify-center;
+  @apply flex md:flex-row flex-col items-stretch justify-center;
 }
 
 .heroContent {
-  @apply relative sm:w-2/5;
+  @apply relative w-full;
 
 }
 .heroImage {

@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import { VideoCameraIcon } from '@heroicons/react/24/solid'
 import s from './ShareModal.module.css'
-import TestimonialTypeSelector from './TestimonialTypeSelector'
+import dynamic from 'next/dynamic'
+
+const TestimonialTypeSelector = dynamic(() => import("./TestimonialTypeSelector"), { ssr: false })
 
 export const ShareModal = () => {
   return (

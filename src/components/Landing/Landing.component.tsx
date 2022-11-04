@@ -33,17 +33,19 @@ const HeroSection = () => {
           <Link href="/"><span className={s.logo}>ClientsTrust.me</span></Link>
         </header>
         <section className={clx(s.hero, 'fit')}>
-          <div className={s.heroContent}>
-            <h1 className={s.mainTitle}>
-              <div className="flex items-center">
-                <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
-              </div>
-              <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
-            </h1>
-            <p className={s.subtitle}>
-              Create trust and strengthen brand credibility. With easy no code solution!
-            </p>
-            <SubscribeForm />
+          <div className="flex items-center sm:w-2/5">
+            <div className={s.heroContent}>
+              <h1 className={s.mainTitle}>
+                <div className="flex items-center">
+                  <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
+                </div>
+                <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
+              </h1>
+              <p className={s.subtitle}>
+                Create trust and strengthen brand credibility. With easy no code solution!
+              </p>
+              <SubscribeForm />
+            </div>
           </div>
           <div className={clx(s.heroImage, 'flex justify-center')}>
             <ShareModal />
