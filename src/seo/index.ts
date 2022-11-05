@@ -1,36 +1,36 @@
-import {DefaultSeoProps} from 'next-seo'
+import { DefaultSeoProps } from 'next-seo'
 const defaultSeo: DefaultSeoProps = {
-  title: 'Email automation for your business',
-  description: 'Automate email marketing campaigns and make them look awesome for your clients',
-  titleTemplate: '%s - Flows',
+  title: 'ClientsTrust.me | Collection and show client testimonials with no coding skills',
+  description: 'We provide testimonial collection and no code integration with your website',
+  titleTemplate: '%s - ClientsTrust.me',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.flows.so/',
-    site_name: 'Flows',
+    url: 'https://www.clientstrust.me/',
+    site_name: 'ClientsTrust.me',
     images: [
       {
-        url: 'https://www.flows.so/og_image_800_600_dark.png',
+        url: 'https://www.clientstrust.me/og_image_800_600_dark.png',
         width: 800,
         height: 600,
-        alt: 'Flows OG dark',
+        alt: 'ClientsTrust.me OG dark',
       },
       {
-        url: 'https://www.flows.so/og_image_800_600.png',
+        url: 'https://www.clientstrust.me/og_image_800_600.png',
         width: 800,
         height: 600,
-        alt: 'Flows OG',
+        alt: 'ClientsTrust.me OG',
       },
       {
-        url: 'https://www.flows.so/og_image_800_600_alt_1.png',
+        url: 'https://www.clientstrust.me/og_image_800_600_alt_1.png',
         width: 800,
         height: 600,
-        alt: 'Flows OG white',
+        alt: 'ClientsTrust.me OG white',
       }
     ]
   },
   twitter: {
-    handle: '@TheRealRemKim',
+    handle: '@AksoLab',
     site: '@site',
     cardType: 'summary_large_image',
   },
