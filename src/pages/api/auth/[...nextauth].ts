@@ -10,10 +10,10 @@ export default NextAuth({
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
+    //GithubProvider({
+    //  clientId: process.env.GITHUB_ID,
+    //  clientSecret: process.env.GITHUB_SECRET,
+    //}),
     //Credentials({
     //  // Requires SERVER
     //  name: 'Credentials',
@@ -28,7 +28,7 @@ export default NextAuth({
     //      headers: { "Content-Type": "application/json" }
     //    })
     //    const user = await res.json()
-  
+
     //    // If no error and we have user data, return it
     //    if (res.ok && user) {
     //      return user

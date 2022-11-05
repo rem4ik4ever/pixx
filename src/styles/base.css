@@ -3,7 +3,7 @@
   --primary-2: #f1f3f5;
   --secondary: #000000;
   --secondary-2: #111;
-  --selection: var(--orange);
+  --selection: var(--blue);
 
   --text-base: #000000;
   --text-primary: #000000;
@@ -15,8 +15,8 @@
   --green: #37b679;
   --red: #da3c3c;
 
-  --orange: #FF6B35;
-  --orange-light: #FFAA64;
+  --blue: rgb(37 99 235);
+  --blue-light: rgb(59 130 246);;
 
   --dark-blue: #3F3D56;
 
@@ -45,7 +45,7 @@
   --hover: rgba(255, 255, 255, 0.075);
   --hover-1: rgba(255, 255, 255, 0.15);
   --hover-2: rgba(255, 255, 255, 0.25);
-  --selection: var(--orange-light);
+  --selection: var(--blue-light);
 
   --text-base: white;
   --text-primary: white;

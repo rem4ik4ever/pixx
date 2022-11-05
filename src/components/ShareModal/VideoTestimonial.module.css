@@ -1,0 +1,12 @@
+.root {
+
+}
+
+.button {
+  @apply rounded-xl border bg-blue text-accent-0 px-4 py-3;  
+  @apply hover:bg-blue-light;
+}
+
+.retake {
+  @apply bg-accent-3 hover:bg-accent-2;
+}

@@ -4,9 +4,6 @@ import Button from '../ui/Button'
 import Input from '../ui/Input'
 import s from './landing.module.css'
 import clx from 'classnames'
-import RightSvg from '../../assets/undraw_well_done_re_3hpo.svg'
-import LeftSvg from '../../assets/undraw_projections_re_ulc6.svg'
-import MobileSvg from '../../assets/undraw_email_campaign_re_m6k5.svg'
 import dataReport from '../../assets/data-report.svg'
 import designInspiration from '../../assets/design-inspiration.svg'
 import projectComplete from '../../assets/project-complete.svg'
@@ -14,13 +11,16 @@ import thoughProcess from '../../assets/thought-process.svg'
 import Image from 'next/image'
 import useTyped from '@components/useTyped';
 import { trpc } from 'src/utils/trpc';
+import arrow from './arrow.svg'
+import { ShareModal } from '@components/ShareModal';
+import { ShieldCheckIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
 
 const HeroSection = () => {
   const { ref } = useTyped({
     strings: [
-      'customer reach',
-      'client engagement',
-      'conversion',
+      'text',
+      'video',
+      'social'
     ],
     typeSpeed: 50,
     backSpeed: 50,
@@ -28,32 +28,62 @@ const HeroSection = () => {
     loop: true,
   })
   return (
-    <div className='mx-auto container fadein'>
-      <header className={s.header}>
-        <Link href="/"><span className={s.logo}>Flows</span></Link>
-      </header>
-      <section className={clx(s.hero, 'fit')}>
-        <div className="md:block hidden">
-          <Image src={LeftSvg} alt="left-svg" width={380} />
-        </div>
-        <div className={s.heroContent}>
-          <h1 className={s.heroTitle}>
-            Email automation<br />
-            to increase<br />
-            <span className="text-orange" ref={ref}></span><br />
-          </h1>
-          <p className={s.subtitle}>
-            Automate email marketing campaigns and make them look awesome for your clients
-          </p>
-          <SubscribeForm />
-        </div>
-        <div className="md:block hidden">
-          <Image src={RightSvg} alt="right-svg" width={380} />
-        </div>
-        <div className='block md:hidden'>
-          <Image src={MobileSvg} alt="right-svg" width={220} height={220} />
-        </div>
-      </section>
+    <div className={s.root}>
+      <div className={clx('mx-auto fadein')}>
+        <header className={s.header}>
+          <Link href="/">
+            <a>
+              <div className="flex gap-2">
+                <ShieldCheckIcon className="w-8 h-8" />
+                <span className={s.logo}>clientstrust.me</span>
+              </div>
+            </a>
+          </Link>
+
+          <div className="flex gap-4">
+            <Link href="/features" passHref>
+              <a>
+                <span className="font-semibold">Features</span>
+              </a>
+            </Link>
+
+            <Link href="/pricing" passHref>
+              <a>
+                <span className='font-semibold'>Pricing</span>
+              </a>
+            </Link>
+          </div>
+
+          <Link href="/sign-up">
+            <a>
+              <Button type="button" variant='slim'>
+                Sign up
+              </Button>
+            </a>
+          </Link>
+
+        </header>
+        <section className={clx(s.hero, 'fit')}>
+          <div className="flex mt-24 max-w-xl">
+            <div className={s.heroContent}>
+              <h1 className={s.mainTitle}>
+                <div className="flex items-center">
+                  <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
+                </div>
+                <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
+              </h1>
+              <p className={s.subtitle}>
+                Create trust and strengthen brand credibility. With easy no code testimonial collection!
+              </p>
+              <SubscribeForm />
+            </div>
+          </div>
+          <div className={clx(s.heroImage)}>
+            <ShareModal />
+            {/*<img src="/hero-sample.png" />*/}
+          </div>
+        </section>
+      </div>
     </div>
   )
 }
@@ -103,12 +133,12 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ id, imgSrc, title, descriptio
     <div className='flex md:flex-row flex-col md:items-stretch items-center justify-center gap-2 md:mb-0 md:h-auto h-[70vh]'>
       <div className={clx(isEven ? 'md:order-3' : 'md:order-1', s.featureItemTextContainer)}>
         <div className={clx(s.featureItemText)}>
-          <h6 className="text-3xl text-orange-light py-2 font-bold">{title}</h6>
+          <h6 className="text-3xl text-blue-light py-2 font-bold">{title}</h6>
           <p className="text-lg">{description}</p>
         </div>
       </div>
       <div className="md:flex hidden order-2 border border-accent-6 items-center mx-8">
-        <div className="absolute bg-orange-light py-2 px-4 rounded-full -ml-5">{id}</div>
+        <div className="absolute bg-blue-light py-2 px-4 rounded-full -ml-5">{id}</div>
       </div>
       <div className={clx(s.featureItemImageContainer, isEven ? 'md:order-1' : 'md:order-3', isEven ? 'bg-accent-2' : 'bg-dark-blue')}>
         <Image src={imgSrc} alt="title" width={400} height={400} />
@@ -147,7 +177,7 @@ const Features = () => {
   return (
     <section className={s.featuresSection}>
       <div className="mx-auto container py-8 flex flex-col items-center">
-        <span className="text-orange font-bold">Features</span>
+        <span className="text-blue font-bold">Features</span>
         <h2 className={s.featuresTitle}>Solutions your business needs</h2>
         <div className='flex flex-col items-center'>
           {features.map(feature => (
@@ -161,16 +191,23 @@ const Features = () => {
 
 const Footer = () => {
   return (
-    <footer className="container mx-auto flex py-4 my-8 gap-8 justify-center md:flex-row flex-col md:p-0 p-4">
-      <div>
-        <h4 className="text-4xl font-bold">Go with the flow</h4>
-        <SubscribeForm />
-      </div>
+    <footer className="container mx-auto flex py-4 my-8 gap-8 md:flex-row flex-col md:p-0 p-4">
       <div className="">
-        <Link href="/"><span className={clx(s.logo, 'text-4xl')}>Flows</span></Link>
-        <p className="text-lg max-w-xs">
-          Automate email marketing campaigns and make them look awesome for your clients
+        <Link href="/">
+          <a>
+            <div className="flex gap-2">
+              <ShieldCheckIcon className="w-8 h-8" />
+              <span className={s.logo}>clientstrust.me</span>
+            </div>
+          </a>
+        </Link>
+        <p className="text-lg max-w-xs mt-6 text-accent-4">
+          Create trust and strengthen brand credibility. With easy no code testimonial collection!
         </p>
+      </div>
+      <div>
+        <h4 className="text-xl">Sign up for updates</h4>
+        <SubscribeForm />
       </div>
     </footer>
   );
@@ -179,7 +216,6 @@ const Footer = () => {
 export const Landing = () => {
   return <div>
     <HeroSection />
-    <Features />
     <Footer />
   </div>
 }

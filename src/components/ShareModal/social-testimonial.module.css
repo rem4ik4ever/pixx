@@ -1,0 +1,25 @@
+.root {
+  @apply flex flex-col gap-3 mt-8;
+}
+
+.button {
+  @apply flex items-center justify-start gap-2 text-xl p-3 border rounded-xl;
+  @apply text-accent-0 hover:scale-105;
+  @apply transition-all duration-200;
+}
+
+.facebook {
+  @apply bg-[#1977F2] ;
+}
+
+.twitter {
+  @apply bg-[#1C9BEF];
+}
+
+.linkedin {
+  @apply hover:bg-[#0D66C2];
+}
+
+.icon {
+  @apply h-8 w-8;
+}

@@ -1,0 +1,11 @@
+.root {
+  @apply bg-primary max-w-xl border border-accent-2 rounded-xl shadow-md p-8 flex flex-col items-center mx-auto;
+}
+
+.typeSelector {
+  @apply border border-accent-2 mt-8 overflow-hidden rounded-md;
+}
+
+.type {
+  @apply px-4 py-4;
+}
