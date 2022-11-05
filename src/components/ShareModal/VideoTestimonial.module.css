@@ -3,8 +3,8 @@
 }
 
 .button {
-  @apply rounded-xl border bg-blue-500 text-accent-0 px-4 py-3;  
-  @apply hover:bg-blue-400;
+  @apply rounded-xl border bg-blue text-accent-0 px-4 py-3;  
+  @apply hover:bg-blue-light;
 }
 
 .retake {

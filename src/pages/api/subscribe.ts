@@ -3,20 +3,20 @@ import { addSubscriptionEmail } from "src/server/services/email-subscription";
 
 const subscribe = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const {email} = req.body
-    if(!email){
+    const { email } = req.body
+    if (!email) {
       res.statusCode = 500
       res.end("email is missing")
       return
-    } 
-    //await addSubscriptionEmail(email)
+    }
+    await addSubscriptionEmail(email)
     res.statusCode = 200;
-    res.end(JSON.stringify({success: true}))
+    res.end(JSON.stringify({ success: true }))
   } catch (error: any) {
     console.log("Failed")
     console.error(error.message)
     res.statusCode = 500;
-    res.end(JSON.stringify({success: false}));
+    res.end(JSON.stringify({ success: false }));
   }
 };
 

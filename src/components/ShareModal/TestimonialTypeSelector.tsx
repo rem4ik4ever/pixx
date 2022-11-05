@@ -50,10 +50,10 @@ export default function TestimonialTypeSelector() {
               className={({ selected }) =>
                 classNames(
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-accent-4',
-                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue focus:outline-none focus:ring-2',
                   selected
-                    ? 'bg-blue-400 shadow text-white'
-                    : 'hover:text-blue-500'
+                    ? 'bg-blue-light shadow text-white'
+                    : 'hover:text-blue'
                 )
               }
             >

@@ -5,6 +5,7 @@ import CharacterCount from '@tiptap/extension-character-count'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
+import Button from '@components/ui/Button'
 
 export const TextTestimonial = () => {
   const limit = 250
@@ -28,11 +29,17 @@ export const TextTestimonial = () => {
   })
 
   return (
-    <div className='border rounded-xl p-4 min-h-[250px]'>
-      <EditorContent editor={editor} />
-      <div className="flex justify-end">
-        <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
+    <div>
+
+      <div className='border rounded-xl p-4 min-h-[250px]'>
+        <EditorContent editor={editor} />
+        <div className="flex justify-end">
+          <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
+        </div>
       </div>
-    </div>
+      <div className="mt-4">
+        <Button className="rounded-xl bg-blue-400" variant='slim'>Submit</Button>
+      </div>
+    </div >
   )
 }

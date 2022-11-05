@@ -1,6 +1,5 @@
 .root {
-  @apply bg-primary max-w-xl border border-accent-2 rounded-xl shadow-md p-8 flex flex-col items-center;
-  @apply max-h-[660px];
+  @apply bg-primary max-w-xl border border-accent-2 rounded-xl shadow-md p-8 flex flex-col items-center mx-auto;
 }
 
 .typeSelector {
