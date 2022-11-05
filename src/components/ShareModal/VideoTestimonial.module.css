@@ -10,3 +10,18 @@
 .retake {
   @apply bg-accent-3 hover:bg-accent-2;
 }
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
+
+.loading {
+  animation-name: spin;
+  animation-duration: 400ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
