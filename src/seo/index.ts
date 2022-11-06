@@ -6,17 +6,17 @@ const defaultSeo: DefaultSeoProps = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.clientstrust.me/',
+    url: 'https://clientstrust.me/',
     site_name: 'ClientsTrust.me',
     images: [
       {
-        url: 'https://www.clientstrust.me/og_image_800_600.png',
+        url: 'https://clientstrust.me/og_image_800_600.png',
         width: 800,
         height: 600,
         alt: 'ClientsTrust.me OG',
       },
       {
-        url: 'https://www.clientstrust.me/og_image_800_600_dark.png',
+        url: 'https://clientstrust.me/og_image_800_600_dark.png',
         width: 800,
         height: 600,
         alt: 'ClientsTrust.me OG dark',
