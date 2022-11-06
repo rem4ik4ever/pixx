@@ -69,7 +69,7 @@ const HeroSection = () => {
           </div>
         </header>
         <section className={clx(s.hero, 'fit')}>
-          <div className="flex mt-24 max-w-xl mx-auto text-center md:text-left">
+          <div className="flex mt-24 max-w-xl mx-auto md:mx-0 text-center md:text-left">
             <div className={s.heroContent}>
               <h1 className={s.mainTitle}>
                 <span className="flex items-center justify-center md:justify-start">
@@ -221,12 +221,25 @@ const Footer = () => {
 export const Landing = () => {
   return <div>
     <HeroSection />
-    <Integration />
+    <Integration
+      title="Easy no code integration within minutes!"
+      description="Few lines of code to include testimonial collection to your website!"
+      code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
+<script type="text/javascript">
+  ctm.init('SECRET_KEY')
+</script>`}
+    />
     <div className="flex-col p-8">
       <h1 className='text-3xl text-center font-bold my-4'>Show that Clients Trust you!</h1>
-      <div className="text-center text-accent-6">Embed Wall of Love to your website and showcase clients testimonials</div>
+      <div className="text-center text-accent-6 mb-16">Embed Wall of Love to your website and showcase clients testimonials</div>
       <WallOfLove />
     </div>
+    <Integration
+      title="Wall of Love with just few lines of code!"
+      description="Just copy paste this into your website to include your Wall of Love into your website"
+      code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
+<iframe id="ctm-wol" src="https://embed.clientstrust.me/wol/618afe402cf6a3dd105568032b3da1b8" frameborder="0" scrolling="no" width="100%"></iframe>`}
+    />
     <Footer />
   </div>
 }

@@ -27,7 +27,7 @@ export const TextTestimonial = () => {
 
   return (
     <div>
-      <div className='border rounded-xl p-4 min-h-[250px]'>
+      <div className='border rounded-xl px-4 min-h-[250px] text-primary'>
         <EditorContent editor={editor} />
         <div className="flex justify-end">
           <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
