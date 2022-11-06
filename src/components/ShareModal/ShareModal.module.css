@@ -1,5 +1,5 @@
 .root {
-  @apply bg-primary max-w-xl border border-accent-2 rounded-xl shadow-md p-8 flex flex-col items-center mx-auto;
+  @apply bg-accent-1 max-w-xl border border-accent-2 rounded-xl shadow-md p-8 flex flex-col items-center mx-auto;
 }
 
 .typeSelector {

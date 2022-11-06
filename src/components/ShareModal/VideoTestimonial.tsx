@@ -94,8 +94,11 @@ const VideoTestimonial = ({
         {!recording && <button className={clx(s.button, 'w-full')} onClick={handleStart}>Start Recording</button>}
         {recording && <button className={clx(s.button, 'w-full')} onClick={handleStop}>Stop Recording</button>}
         {finished && <button className={clx(s.button, s.retake, 'w-1/3')} onClick={handleRetake}>Retake</button>}
+        {finished && <a href={mediaBlobUrl} download="video.webm">
+          <button className={clx(s.button, s.retake, 'w-1/3')}>Download</button>
+        </a>}
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -5,6 +5,8 @@
   --secondary-2: #111;
   --selection: var(--blue);
 
+  --background: var(--primary)
+
   --text-base: #000000;
   --text-primary: #000000;
   --text-secondary: white;
@@ -33,8 +35,10 @@
   --accent-8: #111111;
   --accent-9: #000;
 
+  --card-width: 360px;
+  
   --font-sans: PT Sans, -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
-    'Helvetica', sans-serif;
+  'Helvetica', sans-serif;
 }
 
 [data-theme='dark'] {
@@ -46,6 +50,8 @@
   --hover-1: rgba(255, 255, 255, 0.15);
   --hover-2: rgba(255, 255, 255, 0.25);
   --selection: var(--blue-light);
+  
+  --background: '#272B2E'
 
   --text-base: white;
   --text-primary: white;
@@ -84,7 +90,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--primary);
+  background-color: var(--background);
   color: var(--text-primary);
   overscroll-behavior-x: none;
 }

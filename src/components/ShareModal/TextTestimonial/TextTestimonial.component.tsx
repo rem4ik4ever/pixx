@@ -1,18 +1,15 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import clx from 'classnames'
 import CharacterCount from '@tiptap/extension-character-count'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import Button from '@components/ui/Button'
+import s from './TextTestimonial.module.css'
 
 export const TextTestimonial = () => {
   const limit = 250
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose focus:outline-none min-h-[200px]',
+        class: s.editor as string,
       },
     },
     extensions: [
@@ -30,7 +27,6 @@ export const TextTestimonial = () => {
 
   return (
     <div>
-
       <div className='border rounded-xl p-4 min-h-[250px]'>
         <EditorContent editor={editor} />
         <div className="flex justify-end">

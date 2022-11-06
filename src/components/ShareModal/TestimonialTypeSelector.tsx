@@ -17,7 +17,11 @@ export default function TestimonialTypeSelector() {
   const parent = useRef(null)
 
   const { status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl } =
-    useReactMediaRecorder({ video: true, audio: true });
+    useReactMediaRecorder({
+      video: true, audio: true, blobPropertyBag: {
+        type: 'video/webm'
+      }
+    });
   useEffect(() => {
 
     parent.current && autoAnimate(parent.current)
@@ -70,7 +74,6 @@ export default function TestimonialTypeSelector() {
           <Tab.Panel
             key="Text"
             className={classNames(
-              'bg-white',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             )}
           >
@@ -80,7 +83,6 @@ export default function TestimonialTypeSelector() {
           <Tab.Panel
             key="Video"
             className={classNames(
-              'bg-white',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             )}
           >
@@ -90,7 +92,6 @@ export default function TestimonialTypeSelector() {
           <Tab.Panel
             key="Social"
             className={classNames(
-              'bg-white',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
             )}
           >

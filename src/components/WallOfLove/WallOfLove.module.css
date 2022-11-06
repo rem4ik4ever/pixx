@@ -1,0 +1,11 @@
+.root {
+  @apply max-w-5xl mx-auto;
+}
+
+.columns {
+  @apply grid md:grid-cols-3 gap-2;
+}
+
+.column {
+  @apply flex flex-col gap-2;
+}
