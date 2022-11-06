@@ -3,8 +3,8 @@
 }
 
 .button {
-  @apply flex items-center justify-start gap-2 text-xl p-3 border rounded-xl;
-  @apply text-accent-0 hover:scale-105;
+  @apply flex items-center justify-start gap-2 text-xl p-3 rounded-xl text-primary;
+  @apply hover:scale-105;
   @apply transition-all duration-200;
 }
 

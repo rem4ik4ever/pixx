@@ -11,9 +11,12 @@ import thoughProcess from '../../assets/thought-process.svg'
 import Image from 'next/image'
 import useTyped from '@components/useTyped';
 import { trpc } from 'src/utils/trpc';
-import arrow from './arrow.svg'
 import { ShareModal } from '@components/ShareModal';
 import { ShieldCheckIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
+import { Integration } from './Integration.componet';
+import { ThemeSwitcher } from '@components/ThemeSwitcher';
+import { WallOfLove } from '@components/WallOfLove';
+
 
 const HeroSection = () => {
   const { ref } = useTyped({
@@ -40,36 +43,38 @@ const HeroSection = () => {
             </a>
           </Link>
 
-          <div className="flex gap-4">
+          <div className="gap-4 hidden md:flex">
             <Link href="/features" passHref>
               <a>
-                <span className="font-semibold">Features</span>
+                <span className="font-semibold text-accent-9">Features</span>
               </a>
             </Link>
 
             <Link href="/pricing" passHref>
               <a>
-                <span className='font-semibold'>Pricing</span>
+                <span className='font-semibold text-accent-9'>Pricing</span>
               </a>
             </Link>
           </div>
 
-          <Link href="/sign-up">
-            <a>
-              <Button type="button" variant='slim'>
-                Sign up
-              </Button>
-            </a>
-          </Link>
-
+          <div className="hidden md:flex gap-5 items-center">
+            <ThemeSwitcher />
+            <Link href="/sign-up">
+              <a>
+                <Button type="button" variant='slim'>
+                  Sign up
+                </Button>
+              </a>
+            </Link>
+          </div>
         </header>
         <section className={clx(s.hero, 'fit')}>
-          <div className="flex mt-24 max-w-xl">
+          <div className="flex mt-24 max-w-xl mx-auto md:mx-0 text-center md:text-left">
             <div className={s.heroContent}>
               <h1 className={s.mainTitle}>
-                <div className="flex items-center">
+                <span className="flex items-center justify-center md:justify-start">
                   <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
-                </div>
+                </span>
                 <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
               </h1>
               <p className={s.subtitle}>
@@ -216,6 +221,25 @@ const Footer = () => {
 export const Landing = () => {
   return <div>
     <HeroSection />
+    <Integration
+      title="Easy no code integration within minutes!"
+      description="Few lines of code to include testimonial collection to your website!"
+      code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
+<script type="text/javascript">
+  ctm.init('SECRET_KEY')
+</script>`}
+    />
+    <div className="flex-col p-8">
+      <h1 className='text-3xl text-center font-bold my-4'>Show that Clients Trust you!</h1>
+      <div className="text-center text-accent-6 mb-16">Embed Wall of Love to your website and showcase clients testimonials</div>
+      <WallOfLove />
+    </div>
+    <Integration
+      title="Wall of Love with just few lines of code!"
+      description="Just copy paste this into your website to include your Wall of Love into your website"
+      code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
+<iframe id="ctm-wol" src="https://embed.clientstrust.me/wol/618afe402cf6a3dd105568032b3da1b8" frameborder="0" scrolling="no" width="100%"></iframe>`}
+    />
     <Footer />
   </div>
 }

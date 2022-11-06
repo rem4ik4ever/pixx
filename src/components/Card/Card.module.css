@@ -1,0 +1,14 @@
+.root {
+  @apply bg-accent-1 p-4 rounded-md text-primary transition-all border-accent-7 border;
+} 
+.root:hover {
+  @apply scale-105 shadow-lg;
+}
+
+.avatar {
+  @apply rounded-full w-12 h-12;
+}
+
+.content {
+  @apply pt-4 text-xl text-accent-7;
+}

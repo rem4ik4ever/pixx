@@ -1,0 +1,8 @@
+.root {
+
+}
+
+.editor {
+  @apply prose prose-sm sm:prose focus:outline-none min-h-[200px];
+  color: var(--secondary)
+}
