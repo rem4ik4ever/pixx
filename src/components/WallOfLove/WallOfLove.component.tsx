@@ -44,20 +44,12 @@ const fetchReviews = async () => {
   }
 }
 
-function mapSkip(list: any[], delta: number) {
-  const upd = []
-  for (let i = 0 + delta; i < list.length; i = i + delta + 1) {
-    upd.push(list[i])
-  }
-  return upd;
-}
 
 export const WallOfLove = () => {
   const [reviews, setReviews] = useState<any[]>([])
   useEffect(() => {
     async function init() {
       const res = await fetchReviews()
-      console.log({ res })
       setReviews(res)
     }
     init()
