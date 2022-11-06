@@ -236,7 +236,7 @@ export const Landing = () => {
     </div>
     <Integration
       title="Wall of Love with just few lines of code!"
-      description="Just copy paste this into your website to include your Wall of Love into your website"
+      description="Just copy and paste this into your website to add your Wall of Love"
       code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
 <iframe id="ctm-wol" src="https://embed.clientstrust.me/wol/618afe402cf6a3dd105568032b3da1b8" frameborder="0" scrolling="no" width="100%"></iframe>`}
     />
