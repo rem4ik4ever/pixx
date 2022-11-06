@@ -1,8 +1,8 @@
 import { DefaultSeoProps } from 'next-seo'
 const defaultSeo: DefaultSeoProps = {
-  title: 'ClientsTrust.me | Collection and show client testimonials with no coding skills',
+  title: 'Collection and show client testimonials with no coding skills',
   description: 'We provide testimonial collection and no code integration with your website',
-  titleTemplate: '%s - ClientsTrust.me',
+  titleTemplate: 'ClientsTrust.me | %s',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -10,23 +10,11 @@ const defaultSeo: DefaultSeoProps = {
     site_name: 'ClientsTrust.me',
     images: [
       {
-        url: 'https://www.clientstrust.me/og_image_800_600_dark.png',
+        url: 'https://www.clientstrust.me/og_image_800_600.png',
         width: 800,
         height: 600,
         alt: 'ClientsTrust.me OG dark',
       },
-      {
-        url: 'https://www.clientstrust.me/og_image_800_600.png',
-        width: 800,
-        height: 600,
-        alt: 'ClientsTrust.me OG',
-      },
-      {
-        url: 'https://www.clientstrust.me/og_image_800_600_alt_1.png',
-        width: 800,
-        height: 600,
-        alt: 'ClientsTrust.me OG white',
-      }
     ]
   },
   twitter: {
