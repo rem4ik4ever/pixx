@@ -72,10 +72,12 @@ const HeroSection = () => {
           <div className="flex mt-24 max-w-xl mx-auto md:mx-0 text-center md:text-left">
             <div className={s.heroContent}>
               <h1 className={s.mainTitle}>
-                <span className="flex items-center justify-center md:justify-start">
+                <div className="flex items-center justify-start">
                   <span className={clx(s.heroTitle, 'pr-8')}>Collect</span> <img className={s.heroTitleArrow} src="/arrow.svg" />
-                </span>
-                <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
+                </div>
+                <div className="flex items-center">
+                  <span className={clx(s.heroTitle, 'pr-4')}>Clients,</span> <span className={clx(s.heroTitle, s.heroTitleAccent)}>Testimonials</span>
+                </div>
               </h1>
               <p className={s.subtitle}>
                 Create trust and strengthen brand credibility. With easy no code testimonial collection!
