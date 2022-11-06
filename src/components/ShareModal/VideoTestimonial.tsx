@@ -3,7 +3,6 @@ import { useReactMediaRecorder } from 'react-media-recorder'
 import clx from 'classnames'
 import s from './VideoTestimonial.module.css'
 import { AiOutlineLoading } from 'react-icons/ai'
-import { Spinner } from '@components/Spinner';
 
 const VideoPreview = ({ stream }: { stream: MediaStream | null }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -80,7 +79,7 @@ const VideoTestimonial = ({
   if (permissionState === 'denied') {
     return (
       <div className="p-3 border rounded-xl">
-        <h2 className="text-primary">Looks like we don't have permissions to capture video</h2>
+        <h2 className="text-primary">Looks like we don&apos;t have permissions to capture video</h2>
         <span className="text-accent-4 text-sm">Please allow video capture permissions in your browser</span>
       </div>
     )
