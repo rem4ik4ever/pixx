@@ -46,7 +46,12 @@ export default function TestimonialTypeSelector() {
 
   return (
     <div className="w-full max-w-md px-2 pt-8 pb-4 sm:px-0">
-      <Tab.Group>
+      <Tab.Group onChange={(index) => {
+        if (index !== 1) {
+          stopRecording()
+          clearBlobUrl()
+        }
+      }}>
         <Tab.List className="flex space-x-1 rounded-xl p-1 border" ref={parent}>
           {categories.map(({ type, Icon, IconSolid }) => (
             <Tab
