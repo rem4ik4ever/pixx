@@ -39,7 +39,6 @@ const VideoTestimonial = ({
   useEffect(() => {
     try {
       navigator.permissions.query({ name: "camera" as any }).then(res => {
-        console.log({ permission: res })
         setPermission(res.state as any)
       });
     } catch (error) {
