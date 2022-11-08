@@ -33,41 +33,6 @@ const HeroSection = () => {
   return (
     <div className={s.root}>
       <div className={clx('mx-auto fadein')}>
-        <header className={s.header}>
-          <Link href="/">
-            <a>
-              <div className="flex gap-2">
-                <ShieldCheckIcon className="w-8 h-8" />
-                <span className={s.logo}>clientstrust.me</span>
-              </div>
-            </a>
-          </Link>
-
-          <div className="gap-4 hidden md:flex">
-            <Link href="/features" passHref>
-              <a>
-                <span className="font-semibold text-accent-9">Features</span>
-              </a>
-            </Link>
-
-            <Link href="/pricing" passHref>
-              <a>
-                <span className='font-semibold text-accent-9'>Pricing</span>
-              </a>
-            </Link>
-          </div>
-
-          <div className="hidden md:flex gap-5 items-center">
-            <ThemeSwitcher />
-            <Link href="/sign-up">
-              <a>
-                <Button type="button" variant='slim'>
-                  Sign up
-                </Button>
-              </a>
-            </Link>
-          </div>
-        </header>
         <section className={clx(s.hero, 'fit')}>
           <div className="flex mt-24 max-w-xl mx-auto md:mx-0 text-center md:text-left">
             <div className={s.heroContent}>
@@ -95,7 +60,7 @@ const HeroSection = () => {
   )
 }
 
-const SubscribeForm = () => {
+export const SubscribeForm = () => {
   const [email, setEmail] = useState('')
   const { isLoading, isSuccess, isError, error, mutateAsync, reset } = trpc.useMutation('public.subscribeEmail')
   const handleSubmit = useCallback(async (e: FormEvent) => {
@@ -196,29 +161,7 @@ const Features = () => {
   );
 }
 
-const Footer = () => {
-  return (
-    <footer className="container mx-auto flex py-4 my-8 gap-8 md:flex-row flex-col md:p-0 p-4">
-      <div className="">
-        <Link href="/">
-          <a>
-            <div className="flex gap-2">
-              <ShieldCheckIcon className="w-8 h-8" />
-              <span className={s.logo}>clientstrust.me</span>
-            </div>
-          </a>
-        </Link>
-        <p className="text-lg max-w-xs mt-6 text-accent-4">
-          Create trust and strengthen brand credibility. With easy no code testimonial collection!
-        </p>
-      </div>
-      <div>
-        <h4 className="text-xl">Sign up for updates</h4>
-        <SubscribeForm />
-      </div>
-    </footer>
-  );
-}
+
 
 export const Landing = () => {
   return <div>
@@ -242,6 +185,5 @@ export const Landing = () => {
       code={`<script type="text/javascript" src="https://clientstrust.me/integration/sdk.v1.min.js"></script>
 <iframe id="ctm-wol" src="https://embed.clientstrust.me/wol/618afe402cf6a3dd105568032b3da1b8" frameborder="0" scrolling="no" width="100%"></iframe>`}
     />
-    <Footer />
   </div>
 }

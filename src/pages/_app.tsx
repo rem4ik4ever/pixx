@@ -6,15 +6,24 @@ import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from 'next-themes'
 import "../styles/globals.css";
+import { AppProps } from "next/app";
+import { ReactElement, ReactNode } from "react";
+import { NextPage } from "next";
+import { withLayout } from "@components/Layout";
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const ComponentWithLayout = withLayout(Component as any);
   return (
     <SessionProvider session={session}>
       <ThemeProvider enableSystem={false}>
-        <Component {...pageProps} />
+        <ComponentWithLayout {...pageProps} />
       </ThemeProvider>
     </SessionProvider>
   );
