@@ -6,7 +6,6 @@ import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from 'next-themes'
 import "../styles/globals.css";
-import { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import { withLayout } from "@components/Layout";
@@ -38,6 +37,8 @@ const getBaseUrl = () => {
 
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
+
+console.log({ GQL_URL: process.env.GQL_URL })
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
