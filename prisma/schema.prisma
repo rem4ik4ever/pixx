@@ -52,9 +52,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  campaigns     Campaign[]
-  team          Team?      @relation(fields: [teamId], references: [id])
-  teamId        String?
 }
 
 model VerificationToken {
@@ -63,71 +60,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model PixelTracker {
-  id        String @id @default(cuid())
-  tracker   String @unique @default(uuid())
-  openCount Int    @default(0)
-}
-
-model Team {
-  id    String @id @default(cuid())
-  name  String
-  users User[]
-}
-
-model Campaign {
-  id           String        @id @default(cuid())
-  name         String
-  fromEmail    String
-  fromName     String
-  customTo     String?
-  replyToEmail String?
-  lists        IncludeList[]
-  excludeLists ExcludeList[]
-  owner        User          @relation(fields: [userId], references: [id])
-  userId       String
-}
-
-model IncludeList {
-  campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  campaignId String
-  list       ContactList @relation(fields: [listId], references: [id])
-  listId     String
-
-  @@id([campaignId, listId])
-}
-
-model ExcludeList {
-  campaign   Campaign    @relation(fields: [campaignId], references: [id])
-  campaignId String
-  list       ContactList @relation(fields: [listId], references: [id])
-  listId     String
-
-  @@id([campaignId, listId])
-}
-
-model ContactList {
-  id                  String            @id @default(cuid())
-  name                String
-  contacts            ContactsInLists[]
-  includedInCampaigns IncludeList[]
-  excludedInCampaigns ExcludeList[]
-}
-
-model Contact {
-  id    String            @id @default(cuid())
-  email String
-  lists ContactsInLists[]
-}
-
-model ContactsInLists {
-  contact    Contact     @relation(fields: [contactId], references: [id])
-  contactId  String // relation scalar field (used in the `@relation` attribute above)
-  list       ContactList @relation(fields: [listId], references: [id])
-  listId     String // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime    @default(now())
-
-  @@id([contactId, listId])
 }
