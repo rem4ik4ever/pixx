@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useReactMediaRecorder } from 'react-media-recorder'
 import clx from 'classnames'
 import s from './VideoTestimonial.module.css'
 import { AiOutlineLoading } from 'react-icons/ai'
+import { StopIcon, PlayIcon, VideoCameraIcon, ArrowPathIcon } from '@heroicons/react/24/solid'
+import Button from '@components/ui/Button';
 
 const VideoPreview = ({ stream }: { stream: MediaStream | null }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -93,12 +94,21 @@ const VideoTestimonial = ({
       {!finished && previewStream && <VideoPreview stream={previewStream} />}
       {finished && <video className='rounded-xl' src={mediaBlobUrl} width={500} height={500} controls />}
       <div className='mt-2 flex gap-2'>
-        {!recording && <button className={clx(s.button, 'w-full')} onClick={handleStart}>Start Recording</button>}
-        {recording && <button className={clx(s.button, 'w-full')} onClick={handleStop}>Stop Recording</button>}
-        {finished && <button className={clx(s.button, s.retake, 'w-1/3')} onClick={handleRetake}>Retake</button>}
-        {finished && <a href={mediaBlobUrl} download="video.webm">
-          <button className={clx(s.button, s.retake, 'w-1/3')}>Download</button>
-        </a>}
+        {!recording && !finished && <Button className={clx(s.button, 'w-full')} onClick={handleStart}>
+          <VideoCameraIcon className={s.icon} />
+          <span>Start</span>
+        </Button>}
+        {recording && <Button className={clx(s.button, 'w-full')} onClick={handleStop}>
+          <StopIcon className={s.icon} /> stop
+        </Button>}
+
+        {finished && <Button className={clx(s.button, 'w-full')} onClick={handleRetake}>
+          Submit
+        </Button>}
+
+        {finished && <Button className={clx(s.button, s.retake, 'w-1/3')} onClick={handleRetake}>
+          <ArrowPathIcon className={s.icon} /> retake
+        </Button>}
       </div>
     </div >
   );
