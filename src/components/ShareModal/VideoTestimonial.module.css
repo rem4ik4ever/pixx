@@ -25,3 +25,7 @@
   animation-iteration-count: infinite;
   animation-timing-function: linear; 
 }
+
+.icon {
+  @apply w-6 h-6 mx-2;
+}

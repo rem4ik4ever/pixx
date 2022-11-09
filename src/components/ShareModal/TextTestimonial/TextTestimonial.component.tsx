@@ -33,7 +33,7 @@ export const TextTestimonial = () => {
           <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 flex justify-end">
         <Button className="rounded-xl bg-blue-400" variant='slim'>Submit</Button>
       </div>
     </div >
