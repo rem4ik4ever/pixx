@@ -1,0 +1,15 @@
+.root {
+
+}
+
+.separator {
+  @apply flex w-full items-center;
+}
+
+.separator::before,
+.separator::after {
+  @apply bg-accent-3;
+  content: '';
+  height: 1px;
+  flex-grow: 1; 
+}

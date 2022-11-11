@@ -8,7 +8,8 @@ import { SocialTestimonial } from './SocialTestimonial'
 import { useReactMediaRecorder } from 'react-media-recorder'
 import VideoTestimonial from './VideoTestimonial'
 import { Rating } from './Rating'
-//import { VideoTestimonial } from './VideoTestimonial'
+import { IResolveParams, LoginSocialGoogle } from 'reactjs-social-login'
+import { SocialLogin } from './SocialLogin'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
