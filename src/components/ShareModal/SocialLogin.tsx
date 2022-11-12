@@ -8,7 +8,7 @@ interface Props {
   onError?: (error: unknown) => void
 }
 
-const REDIRECT_URI = 'http://localhost:3000'
+const REDIRECT_URI = process.env.LOGIN_REDIRECT_URL || 'http://localhost:3000'
 
 const formatTwitterProfile = (data: any): Profile => {
   return {
