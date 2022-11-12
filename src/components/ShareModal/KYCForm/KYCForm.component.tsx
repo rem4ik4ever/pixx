@@ -6,9 +6,11 @@ import { ProfileForm } from "./ProfileInfo.component";
 import autoAnimate from "@formkit/auto-animate";
 import TestimonialTypeSelector from "../TestimonialTypeSelector";
 import { useReactMediaRecorder } from "react-media-recorder";
-import { Testimonial } from "@prisma/client";
+import { Testimonial, TestimonialType } from "@prisma/client";
 import { SubmissionConfirmation } from "../SubmissionConfirmation/SubmissionConfirmation";
 import { trpc } from "src/utils/trpc";
+import { v4 as uuidv4 } from 'uuid'
+import { uploadToS3 } from "src/server/services/aws";
 
 interface ManualFormProps {
   profile: Profile
@@ -56,13 +58,14 @@ export const OccupationForm = ({ profile, onChange }: OccupationFormProps) => {
 export const KYCForm = () => {
   const parent = useRef(null)
   const { isLoading, isSuccess, isError, error, mutateAsync, } = trpc.useMutation('public.createTestimonial')
+  const { mutateAsync: getSignedURL } = trpc.useMutation('public.getSignedURL')
   const mediaRecorder = useReactMediaRecorder({
     video: true, audio: true, blobPropertyBag: {
       type: 'video/webm'
     }
   });
   const [step, setStep] = useState(0)
-  const { values, setFieldValue, handleSubmit } = useFormik({
+  const { values, setFieldValue, handleSubmit, isSubmitting } = useFormik({
     initialValues: {
       profile: { provider: 'form', name: '', email: '' },
       testimonial: {
@@ -73,7 +76,24 @@ export const KYCForm = () => {
       }
     },
     onSubmit: async (values) => {
-      const result = await mutateAsync(values)
+      const testimonialData = { ...values }
+      if (values.testimonial.type === TestimonialType.VIDEO && values.testimonial.videoUrl) {
+        try {
+          let file = await fetch(values.testimonial.videoUrl).then(r => r.blob()).then(blobFile => new File([blobFile], "video.webm", { type: 'video/webm' }));
+          // get signed URL from S3
+          const { data, error } = await getSignedURL({ filename: `testimonials/${uuidv4()}.webm`, filetype: 'video/webm' })
+          // Upload to S3 and get videoURL
+          if (!data) {
+            console.error("Failed to fetch signed URL", error)
+            return;
+          }
+          await uploadToS3(file, data.signedRequest)
+          testimonialData.testimonial.videoUrl = data.url
+        } catch (error) {
+          console.log("Upload failed", error)
+        }
+      }
+      const result = await mutateAsync(testimonialData)
       console.log({ result })
     }
   });
@@ -108,6 +128,7 @@ export const KYCForm = () => {
           mediaRecorder={mediaRecorder}
           onSubmit={handleTestimonialSubmit}
           onBack={() => setStep(step - 1)}
+          isSubmitting={isSubmitting}
         />}
         {step === 2 && <SubmissionConfirmation profile={values.profile} />}
       </div>
