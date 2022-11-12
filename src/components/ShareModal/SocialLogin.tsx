@@ -4,27 +4,27 @@ import { Profile } from "./KYCForm/types";
 import { AiFillTwitterCircle, AiFillFacebook, AiFillLinkedin, AiFillGoogleCircle } from 'react-icons/ai'
 
 interface Props {
-  onLogin: (profile: Profile, provider: string) => void
+  onLogin: (profile: Profile) => void
   onError?: (error: unknown) => void
 }
 
 const REDIRECT_URI = 'http://localhost:3000'
 
-const formatTwitterProfile = (data: any): Partial<Profile> => {
+const formatTwitterProfile = (data: any): Profile => {
   return {
     name: data.name,
     provider: 'twitter',
     profileImgUrl: data.profile_image_url,
-    username: data.username
+    username: data.username,
   }
 }
 
-const formatGoogleProfile = (data: any): Partial<Profile> => {
+const formatGoogleProfile = (data: any): Profile => {
   return {
     name: data.name,
     profileImgUrl: data.picture,
     provider: 'google',
-    email: data.email
+    email: data.email,
   }
 }
 
@@ -36,8 +36,8 @@ export const SocialLogin = ({ onLogin, onError }: Props) => {
         scope="openid profile email"
         discoveryDocs="claims_supported"
         access_type="offline"
-        onResolve={({ provider, data }: IResolveParams) => {
-          onLogin(formatGoogleProfile(data), provider)
+        onResolve={({ data }: IResolveParams) => {
+          onLogin(formatGoogleProfile(data))
         }}
         onReject={err => {
           onError?.(err)
@@ -51,8 +51,8 @@ export const SocialLogin = ({ onLogin, onError }: Props) => {
       <LoginSocialTwitter
         client_id={process.env.NEXT_PUBLIC_TWITTER_V2_APP_KEY || ''}
         redirect_uri={REDIRECT_URI}
-        onResolve={({ provider, data }: IResolveParams) => {
-          onLogin(formatTwitterProfile(data), provider)
+        onResolve={({ data }: IResolveParams) => {
+          onLogin(formatTwitterProfile(data))
         }}
         onReject={(err: any) => {
           onError?.(err)

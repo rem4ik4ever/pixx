@@ -1,10 +1,15 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import CharacterCount from '@tiptap/extension-character-count'
-import Button from '@components/ui/Button'
 import s from './TextTestimonial.module.css'
+import Placeholder from '@tiptap/extension-placeholder'
 
-export const TextTestimonial = () => {
+
+interface Props {
+  onChange: (c: string) => void;
+  value: string;
+}
+export const TextTestimonial = ({ value, onChange }: Props) => {
   const limit = 250
   const editor = useEditor({
     editorProps: {
@@ -16,26 +21,28 @@ export const TextTestimonial = () => {
       StarterKit,
       CharacterCount.configure({
         limit,
+      }),
+      Placeholder.configure({
+        emptyEditorClass: 'is-editor-empty',
+        placeholder: 'Please add your feedback'
       })
     ],
-    content: `
-    <p>
-      Please share your feedback
-    </p>
-    `,
+    content: value,
+    onUpdate({ editor }) {
+      if (editor.isEmpty) {
+        onChange('')
+      } else {
+        onChange(editor.getHTML())
+      }
+    }
   })
 
   return (
-    <div>
-      <div className='border rounded-xl px-4 min-h-[250px] text-primary'>
-        <EditorContent editor={editor} />
-        <div className="flex justify-end">
-          <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
-        </div>
+    <div className='border rounded-xl px-4 min-h-[250px] text-primary'>
+      <EditorContent editor={editor} />
+      <div className="flex justify-end">
+        <span className="text-accent-3 text-sm font-semibold">{editor?.storage.characterCount.characters()}/{limit}</span>
       </div>
-      <div className="mt-4 flex justify-end">
-        <Button className="rounded-xl bg-blue-400" variant='slim'>Submit</Button>
-      </div>
-    </div >
+    </div>
   )
 }

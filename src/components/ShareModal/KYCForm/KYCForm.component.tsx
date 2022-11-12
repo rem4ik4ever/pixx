@@ -1,18 +1,33 @@
 import Input from "@components/ui/Input";
-import { useCallback, useEffect, useState } from "react"
-import { SocialLogin } from "../SocialLogin";
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Profile } from "./types";
-import s from './KYCForm.module.css'
-import { ProfileView } from "./Profile";
+import { useFormik } from 'formik'
+import { ProfileForm } from "./ProfileInfo.component";
+import autoAnimate from "@formkit/auto-animate";
+import TestimonialTypeSelector from "../TestimonialTypeSelector";
+import { useReactMediaRecorder } from "react-media-recorder";
+import { Testimonial } from "@prisma/client";
+import { SubmissionConfirmation } from "../SubmissionConfirmation/SubmissionConfirmation";
+import { trpc } from "src/utils/trpc";
 
-export const ManualForm = () => {
+interface ManualFormProps {
+  profile: Profile
+  onChange: (profile: Profile) => void
+}
+export const ManualForm = ({ profile, onChange }: ManualFormProps) => {
+  const handleChange = useCallback((field: string) => (value: string) => {
+    onChange({
+      ...profile,
+      [field]: value
+    })
+  }, [profile, onChange])
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2">
-        <Input type="text" name="firstName" placeholder="First name" />
-        <Input type="text" name="lastName" placeholder="Last name" />
+        <Input type="text" name="firstName" placeholder="First name" onChange={handleChange('firstName')} />
+        <Input type="text" name="lastName" placeholder="Last name" onChange={handleChange('lastName')} />
       </div>
-      <Input type="email" name="email" placeholder="Email" />
+      <Input type="email" name="email" placeholder="Email" onChange={handleChange('email')} />
     </div>
   )
 }
@@ -39,42 +54,63 @@ export const OccupationForm = ({ profile, onChange }: OccupationFormProps) => {
 }
 
 export const KYCForm = () => {
+  const parent = useRef(null)
+  const { isLoading, isSuccess, isError, error, mutateAsync, } = trpc.useMutation('public.createTestimonial')
+  const mediaRecorder = useReactMediaRecorder({
+    video: true, audio: true, blobPropertyBag: {
+      type: 'video/webm'
+    }
+  });
   const [step, setStep] = useState(0)
-  const [profile, setProfile] = useState<Profile | null>(null)
-  const [provider, setProvider] = useState<string>('form')
-  const [mounted, setMounted] = useState<boolean>(false)
+  const { values, setFieldValue, handleSubmit } = useFormik({
+    initialValues: {
+      profile: { provider: 'form', name: '', email: '' },
+      testimonial: {
+        type: 'text',
+        rating: 0,
+        content: '',
+        videoUrl: ''
+      }
+    },
+    onSubmit: async (values) => {
+      const result = await mutateAsync(values)
+      console.log({ result })
+    }
+  });
 
-  const handleLogin = (socialProfile: Profile, provider: string) => {
-    setProfile(socialProfile)
-    setProvider(provider)
-  }
+  const handleProfileSubmit = useCallback((profile: Profile) => {
+    setFieldValue('profile', profile)
+    setStep(step + 1)
+  }, [])
 
-  const handleLogout = () => {
-    setProfile(null)
-    setProvider('form')
-  }
+  const handleTestimonialSubmit = useCallback((testimonial: Omit<Testimonial, "id">) => {
+    setFieldValue('testimonial', testimonial)
+    handleSubmit()
+    setStep(2)
+  }, [])
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current)
+  }, [])
 
   return (
-    <div className="flex flex-col gap-4 items-center py-4">
-      <span className="text-primary text-xl">
-        About you
-      </span>
-      {!profile && (
-        <>
-          <SocialLogin onLogin={handleLogin} />
-          <div className={s.separator}>
-            <span className="px-2 text-accent-3">or</span>
-          </div>
-          <ManualForm />
-        </>
-      )}
-      {profile && (
-        <ProfileView profile={profile} onLogout={handleLogout} />
-      )}
-      {profile && <>
-        <span className="text-accent-3">What do you do?</span>
-        <OccupationForm profile={profile} onChange={setProfile} />
+    <>
+      {step !== 2 && <>
+        <h1 className="text-2xl text-primary font-bold mb-4">HouseWork</h1>
+        <h2 className="text-accent-6 text-center">If you are satisfied with our service please leave a testimonial, it means a lot for us!</h2>
       </>}
-    </div>
+      <div ref={parent} className="w-full flex-col justify-center">
+        {step == 0 && <ProfileForm
+          initialValues={values.profile}
+          onSubmit={handleProfileSubmit} />
+        }
+        {step === 1 && <TestimonialTypeSelector
+          mediaRecorder={mediaRecorder}
+          onSubmit={handleTestimonialSubmit}
+          onBack={() => setStep(step - 1)}
+        />}
+        {step === 2 && <SubmissionConfirmation profile={values.profile} />}
+      </div>
+    </>
   )
 }

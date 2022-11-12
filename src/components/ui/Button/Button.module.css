@@ -36,7 +36,7 @@
 }
 
 .naked {
-  @apply bg-transparent font-semibold border-none shadow-none outline-none py-0 px-0;
+  @apply text-primary bg-transparent font-semibold border-none shadow-none outline-none py-0 px-0;
 }
 
 .naked:hover,

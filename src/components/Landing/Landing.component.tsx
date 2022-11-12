@@ -43,7 +43,7 @@ const HeroSection = () => {
             </a>
           </Link>
 
-          <div className="gap-4 hidden md:flex">
+          {/*<div className="gap-4 hidden md:flex">
             <Link href="/features" passHref>
               <a>
                 <span className="font-semibold text-accent-9">Features</span>
@@ -55,17 +55,17 @@ const HeroSection = () => {
                 <span className='font-semibold text-accent-9'>Pricing</span>
               </a>
             </Link>
-          </div>
+          </div>*/}
 
           <div className="hidden md:flex gap-5 items-center">
             <ThemeSwitcher />
-            <Link href="/sign-up">
+            {/*<Link href="/sign-up">
               <a>
                 <Button type="button" variant='slim'>
                   Sign up
                 </Button>
               </a>
-            </Link>
+            </Link>*/}
           </div>
         </header>
         <section className={clx(s.hero, 'fit')}>
@@ -112,6 +112,7 @@ const SubscribeForm = () => {
   if (isError) {
     return (
       <p className="flex flex-col md:flex-row justify-center items-center gap-2 py-4 text-red font-bold">
+
         <span>
           Something went wrong! Please try again
         </span>
@@ -120,9 +121,12 @@ const SubscribeForm = () => {
     )
   }
   return (
-    <form className={s.subscribeForm} onSubmit={handleSubmit}>
-      <Input type="email" value={email} onChange={setEmail} placeholder='Enter your email*' required />
-      <Button type="submit" variant='slim' className='whitespace-nowrap' loading={isLoading} disabled={isLoading}>JOIN WAITLIST</Button>
+    <form className="flex-col mt-4" onSubmit={handleSubmit}>
+      <div className="text-accent-3 py-4">Sign up for an early access*</div>
+      <div className={s.subscribeForm}>
+        <Input type="email" value={email} onChange={setEmail} placeholder='Enter your email*' required />
+        <Button type="submit" variant='slim' className='whitespace-nowrap' loading={isLoading} disabled={isLoading}>NOTIFY ME</Button>
+      </div>
     </form>
 
   )

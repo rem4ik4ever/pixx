@@ -1,33 +1,53 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
-import { ChatBubbleBottomCenterIcon, VideoCameraIcon, ShareIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleBottomCenterIcon, VideoCameraIcon, ShareIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleBottomCenterIcon as ChatBubbleSolid, VideoCameraIcon as VideoCameraSolid, ShareIcon as ShareSolid } from '@heroicons/react/24/solid'
 import { TextTestimonial } from './TextTestimonial'
 import autoAnimate from '@formkit/auto-animate'
 import { SocialTestimonial } from './SocialTestimonial'
-import { useReactMediaRecorder } from 'react-media-recorder'
+import { ReactMediaRecorderRenderProps, useReactMediaRecorder } from 'react-media-recorder'
 import VideoTestimonial from './VideoTestimonial'
 import { Rating } from './Rating'
-import { IResolveParams, LoginSocialGoogle } from 'reactjs-social-login'
-import { SocialLogin } from './SocialLogin'
+import Button from '@components/ui/Button'
+import { useFormik } from 'formik'
+import { Testimonial, TestimonialType } from '@prisma/client'
+import * as yup from 'yup'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function TestimonialTypeSelector() {
+const validationSchema = yup.object({
+  type: yup.string().required(),
+  content: yup.string().when('type', {
+    is: TestimonialType.TEXT,
+    then: schema => schema.max(250).required('Missing testimonial text')
+  }),
+  rating: yup.number().min(1).max(5).when({
+    is: TestimonialType.SOCIAL,
+    then: schema => schema.notRequired(),
+    otherwise: schema => schema.required('Please add your rating')
+  }),
+  videoUrl: yup.string().when({
+    is: TestimonialType.VIDEO,
+    then: schema => schema.required('Please record video first'),
+    otherwise: schema => schema.notRequired()
+  })
+})
+
+interface Props {
+  onBack: () => void
+  onSubmit: (data: any) => void
+  mediaRecorder: ReactMediaRecorderRenderProps,
+}
+export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorder }: Props) {
   const parent = useRef(null)
 
-  const { status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl } =
-    useReactMediaRecorder({
-      video: true, audio: true, blobPropertyBag: {
-        type: 'video/webm'
-      }
-    });
+  const { status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl } = mediaRecorder;
   useEffect(() => {
-
     parent.current && autoAnimate(parent.current)
   }, [parent])
+
   let categories = useMemo(() => ([
     {
       type: 'Text',
@@ -46,11 +66,27 @@ export default function TestimonialTypeSelector() {
     }
   ]), [])
 
+  const { values, setFieldValue, handleSubmit, isValid, errors, touched } = useFormik<Partial<Testimonial>>({
+    initialValues: {
+      type: TestimonialType.TEXT,
+      content: '',
+      rating: 0
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSubmit(values)
+    },
+    validateOnMount: true
+  })
+
   return (
-    <>
-      <Rating />
+    <form className="w-full flex flex-col items-center" onSubmit={handleSubmit}>
+      <Rating rating={values.rating || 0} onChange={(r) => setFieldValue('rating', r)} />
       <div className="w-full max-w-md px-2 pt-8 pb-4 sm:px-0">
         <Tab.Group onChange={(index) => {
+          if (index === 0) setFieldValue('type', TestimonialType.TEXT)
+          if (index === 1) setFieldValue('type', TestimonialType.VIDEO)
+          if (index === 2) setFieldValue('type', TestimonialType.SOCIAL)
           if (index !== 1) {
             stopRecording()
             clearBlobUrl()
@@ -71,7 +107,6 @@ export default function TestimonialTypeSelector() {
                 }
               >
                 {({ selected }) => (
-
                   <div className='flex flex-row items-center gap-2 justify-center'>
                     {selected ? <IconSolid className="w-6 h-6" /> : <Icon className="w-6 h-6" />} {type}
                   </div>
@@ -86,7 +121,11 @@ export default function TestimonialTypeSelector() {
                 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               )}
             >
-              <TextTestimonial />
+              {touched.content && errors.content && (<span>{errors.content}</span>)}
+              <TextTestimonial
+                onChange={(c => setFieldValue('content', c))}
+                value={values.content || ''}
+              />
             </Tab.Panel>
 
             <Tab.Panel
@@ -107,9 +146,12 @@ export default function TestimonialTypeSelector() {
               <SocialTestimonial />
             </Tab.Panel>
           </Tab.Panels>
-
         </Tab.Group>
+        <div className="flex justify-between mt-2">
+          <Button variant="naked" type="button" onClick={onBack}><ArrowLeftIcon className='w-4 h-4 mr-2' /> back</Button>
+          <Button variant="slim" type="submit" disabled={!isValid}>Submit</Button>
+        </div>
       </div>
-    </>
+    </form>
   )
 }

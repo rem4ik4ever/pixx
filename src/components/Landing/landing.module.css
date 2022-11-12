@@ -32,7 +32,7 @@
 }
 
 .subscribeForm {
-  @apply flex md:flex-row flex-col items-stretch md:items-center gap-2 flex-1 mx-auto mt-8;
+  @apply flex md:flex-row flex-col items-stretch md:items-center gap-2 flex-1 mx-auto;
 }
 
 .emailInput {
