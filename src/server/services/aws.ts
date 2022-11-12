@@ -11,12 +11,12 @@ const signS3Upload = async ({ filename, filetype }: SignS3) => {
     const s3 = new AWS.S3({
       signatureVersion: "v4",
       region: "us-east-2",
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.APP_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.APP_AWS_SECRET_ACCESS_KEY,
     });
 
     const s3Parms = {
-      Bucket: process.env.S3_BUCKET,
+      Bucket: process.env.APP_S3_BUCKET,
       Key: filename,
       Expires: 60,
       ContentType: filetype,
@@ -24,7 +24,7 @@ const signS3Upload = async ({ filename, filetype }: SignS3) => {
     };
 
     const signedRequest = await s3.getSignedUrl("putObject", s3Parms);
-    const url = `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${filename}`;
+    const url = `https://${process.env.APP_S3_BUCKET}.s3.amazonaws.com/${filename}`;
 
     return {
       signedRequest,
