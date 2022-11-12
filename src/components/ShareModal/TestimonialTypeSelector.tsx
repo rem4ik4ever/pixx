@@ -53,16 +53,19 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
       type: 'Text',
       Icon: ChatBubbleBottomCenterIcon,
       IconSolid: ChatBubbleSolid,
+      disabled: false,
     },
     {
-      type: 'Video',
+      type: 'Video (SOON)',
       Icon: VideoCameraIcon,
       IconSolid: VideoCameraSolid,
+      disabled: true
     },
     {
       type: 'Social',
       Icon: ShareIcon,
       IconSolid: ShareSolid,
+      disabled: false
     }
   ]), [])
 
@@ -93,9 +96,10 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
           }
         }}>
           <Tab.List className="flex space-x-1 rounded-xl p-1 border" ref={parent}>
-            {categories.map(({ type, Icon, IconSolid }) => (
+            {categories.map(({ type, Icon, IconSolid, disabled }) => (
               <Tab
                 key={type}
+                disabled={disabled}
                 className={({ selected }) =>
                   classNames(
                     'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-accent-4',
