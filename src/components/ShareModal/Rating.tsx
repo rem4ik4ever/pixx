@@ -9,7 +9,6 @@ interface Props {
 }
 export const Rating = ({ rating, onChange }: Props) => {
   const onClick = useCallback((rating: number) => () => {
-    console.log({ rating })
     onChange(rating)
   }, [])
 
@@ -21,12 +20,12 @@ export const Rating = ({ rating, onChange }: Props) => {
   return (
     <div className={s.root}>
       {list(rating).map((_, idx) => (
-        <button onClick={onClick(idx + 1)} key={idx}>
+        <button type="button" onClick={onClick(idx + 1)} key={idx}>
           <StarIconSolid key={idx} className={s.icon} />
         </button>
       ))}
       {list(5 - rating).map((_, idx) => (
-        <button onClick={onClick(rating + idx + 1)} key={rating + idx} >
+        <button type="button" onClick={onClick(rating + idx + 1)} key={rating + idx} >
           <StarIconOutline key={idx} className={s.icon} />
         </button>
       ))}

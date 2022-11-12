@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { ChatBubbleBottomCenterIcon, VideoCameraIcon, ShareIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleBottomCenterIcon as ChatBubbleSolid, VideoCameraIcon as VideoCameraSolid, ShareIcon as ShareSolid } from '@heroicons/react/24/solid'
@@ -21,7 +21,8 @@ const validationSchema = yup.object({
   type: yup.string().required(),
   content: yup.string().when('type', {
     is: TestimonialType.TEXT,
-    then: schema => schema.max(250).required('Missing testimonial text')
+    then: schema => schema.max(250).required('Missing testimonial text'),
+    otherwise: schema => schema.notRequired()
   }),
   rating: yup.number().min(1).max(5).when({
     is: TestimonialType.SOCIAL,
@@ -30,7 +31,7 @@ const validationSchema = yup.object({
   }),
   videoUrl: yup.string().when({
     is: TestimonialType.VIDEO,
-    then: schema => schema.required('Please record video first'),
+    then: schema => schema.min(1).required('Please record video first'),
     otherwise: schema => schema.notRequired()
   })
 })
@@ -70,11 +71,12 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
     }
   ]), [])
 
-  const { values, setFieldValue, handleSubmit, isValid, errors, touched } = useFormik<Partial<Testimonial>>({
+  const { values, setFieldValue, handleSubmit, isValid, errors, touched, validateForm } = useFormik<Partial<Testimonial>>({
     initialValues: {
       type: TestimonialType.TEXT,
       content: '',
-      rating: 0
+      rating: 0,
+      videoUrl: null
     },
     validationSchema,
     onSubmit: (values) => {
@@ -88,6 +90,8 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
       setFieldValue('videoUrl', mediaBlobUrl)
     }
   }, [mediaBlobUrl])
+
+  console.log({ isValid, values })
 
   return (
     <form className="w-full flex flex-col items-center" onSubmit={handleSubmit}>
@@ -145,7 +149,23 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
                 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               )}
             >
-              <VideoTestimonial {...{ status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl }} />
+              <VideoTestimonial
+                {...{ status, mediaBlobUrl, previewStream, clearBlobUrl, stopRecording }}
+                startRecording={() => {
+                  setFieldValue('videoUrl', null)
+                  startRecording()
+                }}
+                clearBlobUrl={() => {
+                  clearBlobUrl()
+                  setFieldValue('videoUrl', null)
+                }}
+                startPreviewStream={() => {
+                  startRecording()
+                }}
+                stopPreviewStream={() => {
+                  stopRecording()
+                }}
+              />
             </Tab.Panel>
 
             <Tab.Panel
@@ -160,7 +180,7 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
         </Tab.Group>
         <div className="flex justify-between mt-2">
           <Button variant="naked" type="button" disabled={isSubmitting} onClick={onBack}><ArrowLeftIcon className='w-4 h-4 mr-2' /> back</Button>
-          <Button variant="slim" type="submit" disabled={!isValid}>Submit</Button>
+          <Button variant="slim" type="submit" disabled={!isValid || status === 'recording'}>Submit</Button>
         </div>
       </div>
     </form>

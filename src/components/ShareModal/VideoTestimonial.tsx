@@ -24,6 +24,8 @@ interface Props {
   clearBlobUrl: () => void;
   previewStream: MediaStream | null;
   mediaBlobUrl: string | undefined;
+  startPreviewStream: () => void
+  stopPreviewStream: () => void
 }
 
 const useTimer = (limit?: number, limitCallback?: () => void) => {
@@ -76,6 +78,8 @@ const VideoTestimonial = ({
   clearBlobUrl,
   previewStream,
   mediaBlobUrl,
+  startPreviewStream,
+  stopPreviewStream
 }: Props) => {
   const [recording, setRecording] = useState<Boolean>(false)
   const [finished, setFinished] = useState<Boolean>(false)
@@ -98,7 +102,7 @@ const VideoTestimonial = ({
   })
 
   useEffect(() => {
-    startRecording();
+    startPreviewStream();
     return () => clearBlobUrl();
   }, [])
 
@@ -119,7 +123,7 @@ const VideoTestimonial = ({
     clearBlobUrl()
     setRecording(false)
     setFinished(false);
-    startRecording();
+    startPreviewStream();
   }, [])
 
   if (permissionState === 'prompted') {
@@ -155,11 +159,7 @@ const VideoTestimonial = ({
           <StopIcon className={s.icon} /> stop
         </Button>}
 
-        {finished && <Button className={clx(s.button, 'w-full')} onClick={handleRetake}>
-          Submit
-        </Button>}
-
-        {finished && <Button className={clx(s.button, s.retake, 'w-1/3')} onClick={handleRetake}>
+        {finished && <Button variant="ghost" className={clx('w-full bg-transparent')} onClick={handleRetake}>
           <ArrowPathIcon className={s.icon} /> retake
         </Button>}
       </div>
