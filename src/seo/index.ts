@@ -1,6 +1,6 @@
 import { DefaultSeoProps } from 'next-seo'
 const defaultSeo: DefaultSeoProps = {
-  title: 'Collection and show client testimonials with no coding skills',
+  title: 'Collect and show client testimonials with no coding skills',
   description: 'We provide testimonial collection and no code integration with your website',
   titleTemplate: 'ClientsTrust.me | %s',
   openGraph: {
