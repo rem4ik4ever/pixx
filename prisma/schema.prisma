@@ -7,10 +7,10 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
-  //  url      = "file:./db.sqlite"
+  //provider = "mysql"
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+  //referentialIntegrity = "prisma"
 }
 
 model Example {
@@ -45,9 +45,9 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -60,4 +60,20 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum TestimonialType {
+  TEXT
+  SOCIAL
+  VIDEO
+}
+
+model Testimonial {
+  id                String          @id @default(cuid())
+  type              TestimonialType
+  rating            Int?
+  videoUrl          String?
+  content           String?
+  socialMediaSource String?
+  from              Json?
 }

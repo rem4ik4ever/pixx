@@ -25,6 +25,50 @@ interface Props {
   previewStream: MediaStream | null;
   mediaBlobUrl: string | undefined;
 }
+
+const useTimer = (limit?: number, limitCallback?: () => void) => {
+  const [seconds, setSeconds] = useState(0);
+  const [started, setStarted] = useState<Boolean>(false)
+  useEffect(() => {
+    let timer: any = null
+    if (started) {
+      timer = setInterval(() => {
+        if (limit && seconds + 1 > limit) {
+          limitCallback?.();
+          setStarted(false)
+        } else {
+          setSeconds(seconds + 1)
+        }
+      }, 1000)
+    } else if (timer) {
+      clearInterval(timer)
+    }
+    return () => timer && clearTimeout(timer)
+  }, [started, seconds])
+
+  const start = useCallback(() => {
+    if (!started) {
+      setStarted(true)
+    }
+  }, [started])
+
+  const stop = useCallback(() => {
+    setStarted(false)
+  }, [])
+
+  const reset = useCallback(() => {
+    setSeconds(0)
+    setStarted(false)
+  }, [])
+
+  return {
+    start,
+    stop,
+    reset,
+    seconds,
+  }
+}
+
 const VideoTestimonial = ({
   status,
   startRecording,
@@ -36,6 +80,12 @@ const VideoTestimonial = ({
   const [recording, setRecording] = useState<Boolean>(false)
   const [finished, setFinished] = useState<Boolean>(false)
   const [permissionState, setPermission] = useState<'granted' | 'denied' | 'prompted' | null>(null)
+  const finishRecording = () => {
+    stopRecording()
+    setRecording(false)
+    setFinished(true);
+  }
+  const { seconds, start, stop, reset } = useTimer(180, finishRecording)
 
   useEffect(() => {
     try {
@@ -45,7 +95,6 @@ const VideoTestimonial = ({
     } catch (error) {
       setPermission('granted')
     }
-
   })
 
   useEffect(() => {
@@ -54,18 +103,19 @@ const VideoTestimonial = ({
   }, [])
 
   const handleStart = useCallback(() => {
+    start()
     clearBlobUrl();
     startRecording();
     setRecording(true)
   }, [])
 
   const handleStop = useCallback(() => {
-    stopRecording()
-    setRecording(false)
-    setFinished(true);
+    stop()
+    finishRecording()
   }, [])
 
   const handleRetake = useCallback(() => {
+    reset()
     clearBlobUrl()
     setRecording(false)
     setFinished(false);
@@ -93,6 +143,9 @@ const VideoTestimonial = ({
     <div>
       {!finished && previewStream && <VideoPreview stream={previewStream} />}
       {finished && <video className='rounded-xl' src={mediaBlobUrl} width={500} height={500} controls />}
+      <div>
+        {seconds} s.
+      </div>
       <div className='mt-2 flex gap-2'>
         {!recording && !finished && <Button className={clx(s.button, 'w-full')} onClick={handleStart}>
           <VideoCameraIcon className={s.icon} />

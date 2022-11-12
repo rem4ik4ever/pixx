@@ -5,10 +5,12 @@ import React, { InputHTMLAttributes } from 'react'
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
   onChange?: (...args: any[]) => any
+  error?: string;
+  touched?: boolean;
 }
 
 const Input: React.FC<InputProps> = (props) => {
-  const { className, children, onChange, ...rest } = props
+  const { className, children, onChange, touched, error, ...rest } = props
 
   const rootClassName = cn(s.root, {}, className)
 
