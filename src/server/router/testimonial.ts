@@ -8,7 +8,8 @@ const inputValidation = yup.object({
     type: yup.string().required(),
     content: yup.string().when('type', {
       is: TestimonialType.TEXT,
-      then: schema => schema.max(250).required('Missing testimonial text')
+      then: schema => schema.max(250).required('Missing testimonial text'),
+      otherwise: schema => schema.notRequired()
     }),
     rating: yup.number().min(1).max(5).when({
       is: TestimonialType.SOCIAL,
@@ -23,7 +24,12 @@ const inputValidation = yup.object({
   }),
   profile: yup.object({
     name: yup.string().required("Required"),
-    email: yup.string().email('Must be a valid email').required("Required"),
+    email: yup.string().email('Must be a valid email').when('provider', {
+      is: 'twitter',
+      then: schema => schema.notRequired(),
+      otherwise: schema => schema.required('Required')
+    }),
+    provider: yup.string().required()
   })
 })
 

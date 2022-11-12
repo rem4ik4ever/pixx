@@ -42,7 +42,12 @@ export const OccupationForm = ({ profile, handleChange }: OccupationFormProps) =
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
-  email: Yup.string().email('Must be a valid email').required("Required"),
+  email: Yup.string().email('Must be a valid email').when('provider', {
+    is: 'twitter',
+    then: schema => schema.notRequired(),
+    otherwise: schema => schema.required('Required')
+  }),
+  provider: Yup.string().required()
 })
 interface Props {
   initialValues: Profile,

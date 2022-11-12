@@ -113,6 +113,7 @@ export const KYCForm = () => {
     parent.current && autoAnimate(parent.current)
   }, [])
 
+
   return (
     <>
       {step !== 2 && <>

@@ -32,7 +32,7 @@ const validationSchema = yup.object({
   videoUrl: yup.string().when({
     is: TestimonialType.VIDEO,
     then: schema => schema.min(1).required('Please record video first'),
-    otherwise: schema => schema.notRequired()
+    otherwise: schema => schema.nullable().notRequired()
   })
 })
 
@@ -90,6 +90,7 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
       setFieldValue('videoUrl', mediaBlobUrl)
     }
   }, [mediaBlobUrl])
+
 
   return (
     <form className="w-full flex flex-col items-center" onSubmit={handleSubmit}>

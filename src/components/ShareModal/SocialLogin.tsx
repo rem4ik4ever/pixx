@@ -11,6 +11,7 @@ interface Props {
 const REDIRECT_URI = process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL || 'http://localhost:3000'
 
 const formatTwitterProfile = (data: any): Profile => {
+  console.log('twitter', { data })
   return {
     name: data.name,
     provider: 'twitter',
