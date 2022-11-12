@@ -24,8 +24,8 @@ const defaultSeo: DefaultSeoProps = {
     ]
   },
   twitter: {
-    handle: '@AksoLab',
-    site: '@site',
+    handle: '@ClientsTrustMe',
+    site: '@ClientsTrustMe',
     cardType: 'summary_large_image',
   },
 };
