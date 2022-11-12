@@ -7,8 +7,10 @@ generator client {
 }
 
 datasource db {
-  url                  = env("DATABASE_URL")
+  //provider = "mysql"
   provider = "postgres"
+  url      = env("DATABASE_URL")
+  //referentialIntegrity = "prisma"
 }
 
 model Example {
