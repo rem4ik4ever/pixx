@@ -91,8 +91,6 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
     }
   }, [mediaBlobUrl])
 
-  console.log({ isValid, values })
-
   return (
     <form className="w-full flex flex-col items-center" onSubmit={handleSubmit}>
       <Rating rating={values.rating || 0} onChange={(r) => setFieldValue('rating', r)} />
