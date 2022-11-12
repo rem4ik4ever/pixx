@@ -1,7 +1,8 @@
 import s from './ShareModal.module.css'
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+const KYCForm = dynamic(() => import('./KYCForm/KYCForm.component'), { ssr: false })
 
-const KYCForm = dynamic(() => import('./KYCForm/KYCForm.component').then(mod => mod.KYCForm), { ssr: false })
 
 export const ShareModal = () => {
   return (

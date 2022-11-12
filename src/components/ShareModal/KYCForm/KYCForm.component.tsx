@@ -114,3 +114,5 @@ export const KYCForm = () => {
     </>
   )
 }
+
+export default KYCForm
