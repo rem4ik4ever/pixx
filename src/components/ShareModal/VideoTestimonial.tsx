@@ -75,7 +75,7 @@ const VideoTestimonial = ({
   stopRecording,
   clearBlobUrl,
   previewStream,
-  mediaBlobUrl
+  mediaBlobUrl,
 }: Props) => {
   const [recording, setRecording] = useState<Boolean>(false)
   const [finished, setFinished] = useState<Boolean>(false)

@@ -39,8 +39,9 @@ interface Props {
   onBack: () => void
   onSubmit: (data: any) => void
   mediaRecorder: ReactMediaRecorderRenderProps,
+  isSubmitting: boolean
 }
-export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorder }: Props) {
+export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorder, isSubmitting }: Props) {
   const parent = useRef(null)
 
   const { status, startRecording, stopRecording, mediaBlobUrl, previewStream, clearBlobUrl } = mediaRecorder;
@@ -56,10 +57,10 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
       disabled: false,
     },
     {
-      type: 'Video (SOON)',
+      type: 'Video',
       Icon: VideoCameraIcon,
       IconSolid: VideoCameraSolid,
-      disabled: true
+      disabled: false
     },
     {
       type: 'Social',
@@ -81,6 +82,12 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
     },
     validateOnMount: true
   })
+
+  useEffect(() => {
+    if (mediaBlobUrl) {
+      setFieldValue('videoUrl', mediaBlobUrl)
+    }
+  }, [mediaBlobUrl])
 
   return (
     <form className="w-full flex flex-col items-center" onSubmit={handleSubmit}>
@@ -152,7 +159,7 @@ export default function TestimonialTypeSelector({ onBack, onSubmit, mediaRecorde
           </Tab.Panels>
         </Tab.Group>
         <div className="flex justify-between mt-2">
-          <Button variant="naked" type="button" onClick={onBack}><ArrowLeftIcon className='w-4 h-4 mr-2' /> back</Button>
+          <Button variant="naked" type="button" disabled={isSubmitting} onClick={onBack}><ArrowLeftIcon className='w-4 h-4 mr-2' /> back</Button>
           <Button variant="slim" type="submit" disabled={!isValid}>Submit</Button>
         </div>
       </div>
