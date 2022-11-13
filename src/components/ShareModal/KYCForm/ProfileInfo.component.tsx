@@ -17,7 +17,7 @@ interface ManualFormProps {
 }
 export const ManualForm = ({ profile, handleChange, handleBlur, errors, touched }: ManualFormProps) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-2">
+    <div className="flex flex-col sm:flex-row gap-2 w-full">
       <Input type="text" name="name" placeholder="Name" onChange={v => handleChange('name', v)} onBlur={handleBlur} value={profile.name} error={errors.name} touched={touched.name} />
       <Input type="email" name="email" placeholder="Email" onChange={v => handleChange('email', v)} onBlur={handleBlur} value={profile.email} error={errors.email} touched={touched.email} />
     </div>
@@ -30,11 +30,9 @@ interface OccupationFormProps {
 }
 export const OccupationForm = ({ profile, handleChange }: OccupationFormProps) => {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2">
-        <Input type="text" name="jobTitle" placeholder="Job title (optional)" value={profile.jobTitle} onChange={v => handleChange('jobTitle', v)} />
-        <Input type="text" name="occupation" placeholder="Company (optional)" value={profile.company} onChange={v => handleChange('company', v)} />
-      </div>
+    <div className="flex flex-col sm:flex-row gap-2 w-full">
+      <Input type="text" name="jobTitle" placeholder="Job title (optional)" value={profile.jobTitle} onChange={v => handleChange('jobTitle', v)} />
+      <Input type="text" name="occupation" placeholder="Company (optional)" value={profile.company} onChange={v => handleChange('company', v)} />
     </div>
   )
 }
