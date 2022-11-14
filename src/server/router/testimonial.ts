@@ -19,7 +19,7 @@ const inputValidation = yup.object({
     videoUrl: yup.string().when({
       is: TestimonialType.VIDEO,
       then: schema => schema.required('Please record video first'),
-      otherwise: schema => schema.notRequired()
+      otherwise: schema => schema.nullable().notRequired()
     })
   }),
   profile: yup.object({
