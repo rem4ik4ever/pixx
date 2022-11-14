@@ -22,6 +22,7 @@ export default function Document() {
               `,
             }}
           />
+          <script src="https://eight-golden-years.clientstrust.me/script.js" data-site={process.env.FATHOM_SITE_ID} defer></script>
         </>}
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
       </Head>
